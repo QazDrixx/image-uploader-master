@@ -31,6 +31,7 @@
 - [Features](#features)
 - [How to use](#how-to-use)
 - [Contact](#contact)
+- [Future Development Plans](#future-development-plans)
 - [Acknowledgements](#acknowledgements)
 
 <!-- OVERVIEW -->
@@ -99,7 +100,7 @@ $ flask run
 
 ## Contact
 
-- GitHub [@yQazDrixx](https://{github.com/your-usermame})
+- GitHub [@QazDrixx](https://{github.com/your-usermame})
 - Telegram - [@QazDrixx](https://t.me/QazDrixx)
 
 
