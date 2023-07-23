@@ -30,3 +30,5 @@ htmlcov/
 *.scss.map
 
 readme.txt
+
+*.prettierrc
