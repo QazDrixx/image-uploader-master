@@ -33,7 +33,6 @@ readme.txt
 
 *.prettierrc
 
-tempCodeRunnerFile.py
-tempCodeRunnerFile.js
+tempCodeRunnerFile.*
 
 media/
