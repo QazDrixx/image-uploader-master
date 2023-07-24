@@ -33,4 +33,5 @@ readme.txt
 
 *.prettierrc
 
-tempCodeRunnerFile.*
+tempCodeRunnerFile.py
+tempCodeRunnerFile.js
