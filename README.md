@@ -1,6 +1,6 @@
 <!-- Please update value in the {}  -->
 
-<h1 align="center">{Image uploader}</h1>
+<h1 align="center">Image uploader</h1>
 
 <div align="center">
    Solution for a challenge from  <a href="http://devchallenges.io" target="_blank">Devchallenges.io</a>.
@@ -70,11 +70,11 @@ To clone and run this application, you'll need [Git](https://git-scm.com) and [P
 $ git clone https://github.com/your-user-name/your-project-name
 
 #Create a virtual environment
-For windows: $ python -m venv venv <br/>
+For windows: $ python -m venv venv
 For Unix/Linux: $ python3 -m venv venv
 
 #Activate the virtual environment
-For windows: $ python -m venv\Scripts\activate.ps1 <br/>
+For windows: $ python -m venv\Scripts\activate.ps1
 For Unix/Linux: $ source venv/bin/activate
 
 # Install dependencies
