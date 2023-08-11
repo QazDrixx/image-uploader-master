@@ -1,0 +1,26 @@
+@import '../../scss/App.scss';
+
+.Wrap {
+    @include wrap(25.125rem, 2.25rem 2rem);
+}
+
+.Header {
+    text-align: center;
+}
+
+.HeaderText {
+    @include textStyle(#4F4F4F, 1.125rem, -0.03938rem);
+}
+
+.HeaderSubText {
+    @include textStyle(#828282, 0.625rem, -0.02188rem);
+    margin-top: 1rem;
+}
+
+.Or {
+    @include textStyle(#BDBDBD, 0.75rem,-0.02625rem);
+    text-align: center;
+    pointer-events: none;
+    user-select: none;
+    margin-top: 1.18rem;
+}

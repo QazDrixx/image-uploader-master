@@ -1,0 +1,19 @@
+@import '../../scss/App.scss';
+
+.Wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    @include wrap(25.02244rem, 2.25rem 1.73rem 2.74rem 2rem);
+}
+
+.Header {
+    @include textStyle(#4F4F4F, 1.125rem, -0.03938rem);
+    margin-top: 0.75rem
+}
+
+.TryAgain {
+    @include textStyle(#fff, 0.75rem, -0.02625rem);
+    @include button(0.5rem 1rem);
+    margin-top: 0.75rem;
+}

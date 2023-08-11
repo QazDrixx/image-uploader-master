@@ -1,0 +1,18 @@
+@import '../../../scss/App.scss';
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@500&family=Poppins:wght@500&display=swap');
+
+
+.FileChooserWrap {
+    margin-top: 1.35rem;
+    text-align: center;
+}
+
+.FileChooser__input {
+    display: none;
+}
+
+.FileChooser__label {
+    @include textStyle(#fff, 0.75rem, -0.02625rem);
+    @include button(0.5rem 1rem);
+    font-family: Noto Sans;
+}
