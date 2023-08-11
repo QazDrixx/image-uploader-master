@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5"/>
+        <link rel="shortcut icon" href="/static/img/devchallenges.png">
+        <!-- <link rel="shortcut icon" type="image/x-icon" href="https://devchallenges.io/"/> -->
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap" rel="stylesheet"/>
+        <link rel="stylesheet" href="/static/css/style.css">
+        <title>Devchallenges</title>
+    </head>
+    <body>
+        <div class="wrap">
+            <div class="header">
+                <div class="header-header">Upload your image</div>
+                <div class="header-label">File should be Jpeg, Png,...</div>
+            </div>
+
+            <form action="/image_upload" class="file-form" method="POST" enctype="multipart/form-data">
+                <div class="dnd dragdrop">
+                    <div class="dnd dragdrop__image"></div>
+                    <div class="dnd dragdrop__text">Drag & Drop your image here</div>
+                    <div class="dnd dragdrop__err hide">Please only drag one image</div>
+                </div>
+    
+                <div class="or">Or</div>
+    
+                <label for="file-upload" class="choose-file">
+                    Choose a file
+                    <input id="file-upload" type="file" accept="image/*" name="file-upload"/>
+                </label>
+            </form>
+        </div>
+
+        <div class="loading-wrap hide">
+            <div class="loading-wrap__content">
+                <div class="loading-text">Uploading...</div>
+                <div class="loading-bar">
+                    <div class="loading__progress"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="result-wrap success-wrap hide">
+            <div class="result-header">
+                <svg xmlns="http://www.w3.org/2000/svg" width="42" height="43" viewBox="0 0 42 43" fill="none">
+                    <g clip-path="url(#clip0_1_56)">
+                            <path d="M21.0001 3.92381C11.3401 3.92381 3.50012 11.7638 3.50012 21.4238C3.50012 31.0838 11.3401 38.9238 21.0001 38.9238C30.6601 38.9238 38.5001 31.0838 38.5001 21.4238C38.5001 11.7638 30.6601 3.92381 21.0001 3.92381ZM16.2576 28.9313L9.97512 22.6488C9.29262 21.9663 9.29262 20.8638 9.97512 20.1813C10.6576 19.4988 11.7601 19.4988 12.4426 20.1813L17.5001 25.2213L29.5401 13.1813C30.2226 12.4988 31.3251 12.4988 32.0076 13.1813C32.6901 13.8638 32.6901 14.9663 32.0076 15.6488L18.7251 28.9313C18.0601 29.6138 16.9401 29.6138 16.2576 28.9313Z" fill="#219653"/>
+                    </g>
+                    <defs>
+                        <clipPath id="clip0_1_56">
+                            <rect width="42" height="42" fill="white" transform="translate(0.00012207 0.423584)"/>
+                        </clipPath>
+                    </defs>
+                </svg>
+                <div class="result-header__text">Uploaded Successfully!</div>
+            </div>
+            <div class="preview-image"></div>
+            <div class="image-url__wrap">
+                <div class="image-url">
+                    <a class="image-url__link" href=''></a>
+                    <div class="copylink">
+                        <div class="copylink_text">Copy Link</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="loading-wrap error-wrap hide">
+            <div class="result-header">
+                <?xml version="1.0" ?><!DOCTYPE svg  PUBLIC '-//W3C//DTD SVG 1.0//EN'  'http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd'><svg height="32" style="overflow:visible;enable-background:new 0 0 32 32" viewBox="0 0 32 32" width="32" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><g><g id="Error_1_"><g id="Error"><circle cx="16" cy="16" id="BG" r="16" style="fill:#D72828;"/><path d="M14.5,25h3v-3h-3V25z M14.5,6v13h3V6H14.5z" id="Exclamatory_x5F_Sign" style="fill:#E6E6E6;"/></g></g></g></svg>
+                <div class="result-header__text">Something went wrong...</div>
+                <div class="choose-file retry">
+                    <div>Retry</div>
+                </div>
+            </div>
+        </div>     
+
+    <script src="../static/js/script.js"></script>
+</html>
