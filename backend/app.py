@@ -5,7 +5,7 @@ app = Flask(__name__)
 
 UPLOAD_FOLDER = 'media'
 
-@app.route("/upload_image", methods=["GET", "POST"])
+@app.route("/", methods=["GET", "POST"])
 def upload_image():
     if request.method == 'POST':
         if not os.path.isdir(UPLOAD_FOLDER): os.mkdir(UPLOAD_FOLDER)
@@ -25,7 +25,7 @@ def upload_image():
         response.headers.set('Access-Control-Allow-Origin', '*')
         return response
     
-    return ''
+    return '-1'
 
 @app.route('/<path:folder_name>/<path:file_name>')
 def show_image(folder_name, file_name):
