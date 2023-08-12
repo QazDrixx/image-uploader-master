@@ -59,15 +59,15 @@ $ git clone https://github.com/QazDrixx/image-uploader-master.git
 $ npm install
 
 # Create a virtual enviroment for backend part
-For windows: $ python -m venv .venv
+For Windows: $ python -m venv .venv
 For Unix/Linux: $ python3 -m venv .venv
 
 #Activate the virtual environment
-For windows: $ .venv\Scripts\activate
+For Windows: $ .venv\Scripts\activate
 For Unix/Linux: $ source .venv/bin/activate
 
 # Install dependencies for backend part
-$ pip install -r requirements.txt
+$ pip install -r backend/requirements.txt
 
 # Run the backend part
 $ cd backend
