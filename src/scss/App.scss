@@ -1,15 +1,14 @@
 .App {
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center; 
+    // justify-content: center;
+    // align-items: center; 
     min-height: 100vh;
     background-color: #FAFAFB;
     flex: 1;
 }
 
 .Components {
-    flex: 1;
     display: flex;
     justify-content: center;
     align-items: center;

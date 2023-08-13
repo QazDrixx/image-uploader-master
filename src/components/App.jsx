@@ -7,6 +7,8 @@ import { useState } from 'react';
 import { postFile } from './services/postFile';
 import { UploadError } from './uploadError/uploadError';
 import { CreatedBy } from './UI/CreatedBy/CreatedBy';
+import { NavBar } from './NavBar/NavBar';
+
 
 function App() {
     const preventDefaultDrop = (e) => {
@@ -31,6 +33,8 @@ function App() {
             onDrop={preventDefaultDrop}
             onDragOver={preventDefaultDrop}
         >
+        
+        <NavBar/>
 
         <div className='Components'>
             {uploadStage.isUploader && <ImageUploader sendImage={sendImage} />}
