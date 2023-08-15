@@ -2,9 +2,9 @@ import '../scss/App.scss';
 import { ImageUploader } from './ImageUploader/ImageUploader';
 import { ImageLoading } from './ImageLoading/ImageLoading';
 import { ImagePreview } from './ImagePreview/ImagePreview';
-import { useSendImage } from './hooks/useSendImage';
+import { useSendImage } from '../hooks/useSendImage';
 import { useState } from 'react';
-import { postFile } from './services/postFile';
+import { postFile } from '../services/postFile';
 import { UploadError } from './uploadError/uploadError';
 import { CreatedBy } from './UI/CreatedBy/CreatedBy';
 import { NavBar } from './NavBar/NavBar';
@@ -28,21 +28,23 @@ function App() {
 
 
     return (
-        <div
-            className="App"
-            onDrop={preventDefaultDrop}
-            onDragOver={preventDefaultDrop}
-        >
+        <div className="App" onDrop={preventDefaultDrop} onDragOver={preventDefaultDrop}>
         
-        <NavBar/>
+            <header>
+                <NavBar/>
+            </header>
 
-        <div className='Components'>
-            {uploadStage.isUploader && <ImageUploader sendImage={sendImage} />}
-            {uploadStage.isLoading && <ImageLoading />}
-            {uploadStage.isPreview && <ImagePreview imageUrl={imageUrl} />}
-            {uploadStage.error && <UploadError goHome={goHome}/>}
-        </div>
-            <CreatedBy/>
+            <main className='Main'>
+                {uploadStage.isUploader && <ImageUploader sendImage={sendImage} />}
+                {uploadStage.isLoading && <ImageLoading />}
+                {uploadStage.isPreview && <ImagePreview imageUrl={imageUrl} />}
+                {uploadStage.error && <UploadError goHome={goHome}/>}
+            </main>
+
+            <footer className='Footer'>
+                <CreatedBy/>
+            </footer>
+            
         </div>
     );
 }
