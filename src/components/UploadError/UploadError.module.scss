@@ -16,4 +16,5 @@
     @include textStyle(#fff, 0.75rem, -0.02625rem);
     @include button(0.5rem 1rem);
     margin-top: 0.75rem;
+    text-decoration: none;
 }

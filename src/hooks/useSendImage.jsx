@@ -1,31 +1,30 @@
-import {useState } from 'react';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 export const useSendImage = () => {
     const [uploadStage, setUploadStage] = useState({
-        isUploader: true,
         isLoading: false,
-        isPreview: false,
         error: false,
     });
 
+    const navigate = useNavigate()
 
     const handleSendingImage = async (callback) => {
         try {
-            setUploadStage((uploadStage) => ({...uploadStage, isLoading: true, isUploader: false}));
+            setUploadStage((uploadStage) => ({...uploadStage, isLoading: true}));
             await callback();
+            // navigate()
         
         } catch (error) {
             setUploadStage((uploadStage) => ({...uploadStage, error: error}));
+            navigate('/error')
+            throw(error)
 
         } finally {
-            setUploadStage((uploadStage) => ({...uploadStage, isLoading: false, isPreview:uploadStage.error?false:true}));
+            setUploadStage((uploadStage) => ({...uploadStage, isLoading: false}));
         }
     };
 
-    const goHome = () => {
-        setUploadStage((uploadStage) => ({...uploadStage, isUploader:true, error:false, isPreview:false}))
-    }
-
-    return [handleSendingImage, uploadStage, goHome];
+    return [handleSendingImage, uploadStage];
 };
 
