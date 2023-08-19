@@ -1,8 +1,9 @@
 import classes from './UploadError.module.scss'
 import PropTypes from "prop-types";
 import { Error } from "../UI/SvgComponents/Error"
+import { Link } from 'react-router-dom';
 
-export const UploadError = ({goHome}) => {
+export const UploadError = () => {
 
 
 
@@ -10,7 +11,7 @@ export const UploadError = ({goHome}) => {
     <div className={classes.Wrap}>
         <Error/>
         <div className={classes.Header}>Something went wrong...</div>
-        <div className={classes.TryAgain} onClick={() => goHome()}>Try again</div>
+        <Link to={'/'} className={classes.TryAgain}>Try Again</Link>
     </div>
   )
 }

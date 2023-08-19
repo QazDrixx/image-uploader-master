@@ -1,0 +1,6 @@
+@import '../../scss/index.scss';
+
+.Link {
+    text-decoration: none;
+    @include textStyle(#4F4F4F, 1.25rem, normal);
+}
