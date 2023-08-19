@@ -19,7 +19,7 @@ function App() {
         handleSendingImage(async () => {
             const response = await postFile(image);
             setImageData(response.data);
-            navigate(`image/${response.data['image_unique_name']}`)
+            navigate(`image/${response.data['filename']}`)
         });
     };
 
@@ -32,15 +32,7 @@ function App() {
                 <Route path='image/:imageName' element={<ImagePreview imageData={imageData} />}/>
                 <Route path='error' element={<UploadError />}/>
             </Route>
-        </Routes>
-
-            {/* <main className='Main'>
-                {uploadStage.isUploader && <ImageUploader sendImage={sendImage} />}
-                {uploadStage.isLoading && <ImageLoading />}
-                {uploadStage.isPreview && <ImagePreview imageUrl={imageUrl} />}
-                {uploadStage.error && <UploadError goHome={goHome}/>}
-            </main> */}
-      
+        </Routes>  
         </>
     );
 }

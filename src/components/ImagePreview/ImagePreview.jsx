@@ -8,7 +8,7 @@ export const ImagePreview = ({imageData}=null) => {
             <p>Image not found</p>
         )
     }
-    const {image_url} = imageData
+    const {fileUrl} = imageData
 
   return (
     <div className={classes.Wrap}>
@@ -19,13 +19,13 @@ export const ImagePreview = ({imageData}=null) => {
             </div>
         </div>
         
-        <div className={classes.Preview} style={{"backgroundImage": `url(${image_url})`}}></div>
+        <div className={classes.Preview} style={{"backgroundImage": `url(${fileUrl})`}}></div>
 
         <div className={classes.ImageUrlWrap}>
-            <a href={image_url} className={classes.Url}>
-                {image_url}
+            <a href={fileUrl} className={classes.Url}>
+                {fileUrl}
             </a>
-            <div className={classes.CopyLink} onClick={() => {navigator.clipboard.writeText(image_url)}}>
+            <div className={classes.CopyLink} onClick={() => {navigator.clipboard.writeText(fileUrl)}}>
                 Copy Link
             </div>
         </div>
