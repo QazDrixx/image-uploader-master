@@ -28,7 +28,6 @@ function App() {
         <Routes>
             <Route path='/' element={<Layout/>}>
                 <Route index element={uploadStage.isLoading?<ImageLoading />:<ImageUploader sendImage={sendImage}/>} />
-
                 <Route path='image/:imageName' element={<ImagePreview imageData={imageData} />}/>
                 <Route path='error' element={<UploadError />}/>
             </Route>
