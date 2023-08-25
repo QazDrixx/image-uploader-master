@@ -1,47 +1,48 @@
-import express  from "express";
+import express from "express";
 import morgan from "morgan";
 import multer from "multer";
-import cors from 'cors'
-import { storage, fileFilter } from "./storage.js";
-import { parse } from 'path'
+import cors from 'cors';
+import mongoose from "mongoose";
+import { config } from "dotenv";
+import { checkUser } from "./services/checkUser.js";
+import { userValiadation } from "./services/validation.js";
+import { storage, fileFilter } from "./services/storage.js";
+import * as imageController from "./controllers/uploadFile.js";
+import * as userController from './controllers/userController.js'
 
+config({path: '../.env'})
 const upload = multer({ storage: storage, fileFilter:fileFilter })
 const app = express()
 
+mongoose.connect('mongodb+srv://qazdrixx:8aXQUWhsz0UngeI9@cluster0.pxfblkb.mongodb.net/image-upload-master?retryWrites=true&w=majority')
+    .then(() => console.log('db ok'))
+    .catch(err => console.log(err))
+
 app.use('/media', express.static('media'));
+app.use(express.json())
 app.use(morgan('dev'))
 app.use(cors({
     origin: ['http://localhost:5173', ]
 }));
 
-app.post('/', upload.single('image'), (req, res) => {
-    try {
-        
-        if (!req.file) {
-            throw new Error("No image file provided");
-        }
 
-        const {originalname, filename, path} = req.file
-        const pathToFile = path.replace(/\\/g, '/')
-        const file = {
-            ...req.file, 
-            path: pathToFile,
-            fileUrl: `${req.protocol}://${req.get('host')}/${pathToFile}`,
-            originalname: parse(originalname).name,
-            filename: parse(filename).name,
-            fileExt: parse(filename).ext
-        }
+app.post('/images', upload.single('image'), checkUser, imageController.uploadImage)
 
-        console.log(file);
-        res.send(file)
-    }
-    catch (err) {
-        console.error("Error while processing request:", err.message);
-        res.status(500).send(err.message);
-    }
-})
+app.get('/images', checkUser, imageController.getAllImages)
 
-app.listen(4444, (err) => {
+app.get('/images/:id', checkUser, imageController.getOneImage)
+
+app.delete('/images/:id', checkUser, imageController.deleteImage)
+
+app.post('/registration', userValiadation, userController.userRegistration)
+
+app.post('/login', userController.userLogin)
+
+app.get('/getUser', checkUser, userController.getUser)
+
+const PORT = process.env.PORT || 5555
+
+app.listen(PORT, (err) => {
     if(err) console.log(err);
-    else console.log('OK');
+    else console.log(`The app is running on a port ${PORT}`);
 })

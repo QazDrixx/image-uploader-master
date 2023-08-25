@@ -23,27 +23,8 @@ dist-ssr
 *.sln
 *.sw?
 .vite
-
-#python
-.DS_Store
-.env
-.flaskenv
-*.pyc
-*.pyo
-env/
-venv/
-.venv/
-env*
-dist/
-build/
-*.egg
-*.egg-info/
-.tox/
-.cache/
-.pytest_cache/
-.idea/
-docs/_build/
 .vscode
+.env
 
 # Coverage reports
 htmlcov/
@@ -55,8 +36,6 @@ htmlcov/
 *.css.map
 *.sass.map
 *.scss.map
-
-readme.txt
 
 *.prettierrc
 
