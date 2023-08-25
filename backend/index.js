@@ -3,12 +3,14 @@ import morgan from "morgan";
 import multer from "multer";
 import cors from 'cors';
 import mongoose from "mongoose";
+import { config } from "dotenv";
 import { checkUser } from "./services/checkUser.js";
 import { userValiadation } from "./services/validation.js";
 import { storage, fileFilter } from "./services/storage.js";
 import * as imageController from "./controllers/uploadFile.js";
 import * as userController from './controllers/userController.js'
 
+config({path: '../.env'})
 const upload = multer({ storage: storage, fileFilter:fileFilter })
 const app = express()
 
@@ -38,7 +40,9 @@ app.post('/login', userController.userLogin)
 
 app.get('/getUser', checkUser, userController.getUser)
 
-app.listen(4444, (err) => {
+const PORT = process.env.PORT || 5555
+
+app.listen(PORT, (err) => {
     if(err) console.log(err);
-    else console.log('OK');
+    else console.log(`The app is running on a port ${PORT}`);
 })

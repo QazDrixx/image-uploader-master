@@ -1,11 +1,13 @@
 import jwt from "jsonwebtoken";
-const SECRET = '64TDresr3A4T54hta'
+import { config } from "dotenv";
+
+config({path: '../../.env'})
 
 export const checkUser = (req, res, next) => {
     try {
         const token = (req.headers.authorization || '').replace(/Bearer /, '')
         if (!token) throw new Error('No access')
-        req.userId = jwt.verify(token, SECRET).userId
+        req.userId = jwt.verify(token, process.env.SECRET_KEY).userId
         next()
         
     } catch (err) {

@@ -2,8 +2,9 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import userSchema from "../models/userModel.js";
 import { validationResult } from "express-validator";
+import { config } from "dotenv";
 
-const SECRET = '64TDresr3A4T54hta'
+config({path: '../../.env'})
 
 export const userRegistration = async (req, res) => {
     try {
@@ -27,7 +28,7 @@ export const userRegistration = async (req, res) => {
 
         const user = await doc.save()
         
-        const token = jwt.sign({userId:user._id}, SECRET, {expiresIn:'14d'})
+        const token = jwt.sign({userId:user._id}, process.env.SECRET_KEY, {expiresIn:'14d'})
         res.send({...user._doc, token})
 
     } catch(err) {
@@ -42,7 +43,7 @@ export const userLogin = async (req, res) => {
         const user = await userSchema.findOne({$or:[{username:emailOrUsername}, {email:emailOrUsername}]}).orFail('User not found')
 
         if (!await bcrypt.compare(password, user.password)) throw new Error('Incorrect password')
-        const token = jwt.sign({userId:user._id}, SECRET, {expiresIn:'14d'})
+        const token = jwt.sign({userId:user._id}, process.env.SECRET_KEY, {expiresIn:'14d'})
         res.json({...user._doc, token})
 
     } catch (err) {
@@ -56,7 +57,7 @@ export const getUser = async (req, res) => {
     try {
         const user = await userSchema.findById(req.userId)
         if(!user) return res.status(404).json({msg:'User not found'})
-        const token = jwt.sign({userId:user._id}, SECRET, {expiresIn:'14d'})
+        const token = jwt.sign({userId:user._id}, process.env.SECRET_KEY, {expiresIn:'14d'})
         res.json({...user._doc, token})
 
     } catch (err) {
