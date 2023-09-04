@@ -1,10 +1,7 @@
 @import '../../../scss/index.scss';
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700&family=Noto+Sans:wght@500&family=Poppins:wght@500&display=swap');
-
 
 .CreatedBy {
     @include textStyle(#A9A9A9, 0.5rem, normal);
-    font-family: Montserrat;
     margin-bottom: 0.75rem;
 }
 

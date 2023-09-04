@@ -1,0 +1,27 @@
+@import '../../scss/index.scss';
+
+.Form{
+    width: 100%;
+}
+
+.FormLabel {
+    margin-bottom: 0.25rem!important;
+    font-size: 1rem;
+}
+
+.RegistrationButton {
+    margin-top: 1rem;
+    width: 100%;
+    background-color: #2F80ED!important;
+    &:hover {
+        background-color: #216ac9!important;
+    }
+    font-size: 1rem!important;
+}
+
+.ButtonText {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 1.5rem;
+}

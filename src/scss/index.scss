@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700&family=Noto+Sans:wght@500&family=Poppins:wght@400;500&display=swap');
 
 * {
     box-sizing: border-box;
@@ -6,8 +6,7 @@
 
 html, body {
     margin: 0;
-    font-family: 'Poppins', sans-serif;
-    font-size: 16px;
+    font-size: 18px;
 }
 
 @mixin textStyle ($color, $fontSize, $letteSpacing) {
@@ -35,6 +34,12 @@ html, body {
     transition: all .25s ease;
 
     &:hover {
-        background: #165ab4;
+        background: #216ac9;
+    }
+}
+
+@media(max-width: 576px) {
+    html, body {
+        font-size: 16px;
     }
 }

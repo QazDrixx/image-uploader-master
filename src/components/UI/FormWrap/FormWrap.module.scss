@@ -1,0 +1,22 @@
+@import '../../../scss/index.scss';
+
+.FormWrap {
+    @include wrap(25.125rem, 1.25rem 2.25rem);
+}
+
+.RegistrationHeader {
+    display: flex;
+    align-items: center;
+}
+
+.HeaderText {
+    @include textStyle(#4F4F4F, 1.25rem, normal);
+    margin-left: 0.5rem;
+}
+
+.Error {
+    width: 100%;
+    text-align: center;
+    margin-top: 1rem;
+    padding: 0.5rem!important;
+}

@@ -1,0 +1,9 @@
+@import '../../../scss/index.scss';
+
+.Or {
+    @include textStyle(#BDBDBD, 0.75rem,-0.02625rem);
+    text-align: center;
+    pointer-events: none;
+    user-select: none;
+    align-self: center;
+}

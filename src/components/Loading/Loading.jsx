@@ -1,6 +1,6 @@
 import classes from './ImageLoading.module.scss'
 
-export const ImageLoading = () => {
+export const Loading = () => {
   return (
     <div className={classes.Wrap}>
         <span className={classes.Header}>
