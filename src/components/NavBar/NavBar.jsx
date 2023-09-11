@@ -8,10 +8,13 @@ import NavDropdown from 'react-bootstrap/NavDropdown';
 import Button from 'react-bootstrap/Button';
 import { Link, useNavigate } from 'react-router-dom';
 import { useLogOut } from '../../hooks/useLogOut';
+import { DotsLoading } from '../UI/DotsLoaing/DotsLoading';
 
 export const NavBar = () => {
     const isAuth = useSelector((state) => state.auth.isAuth)
     const userData = useSelector((state) => state.auth.userData)
+    const isFetchingUser = useSelector((state) => state.auth.isFetchingUser)
+    console.log(isFetchingUser);
     const navigate = useNavigate()
     const logOut = useLogOut()
     
@@ -21,19 +24,25 @@ export const NavBar = () => {
                 <Navbar.Brand><Link className={classes.HomeLink} to={'/'}>Image Uploader</Link></Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav"/>
                 <Navbar.Collapse id="basic-navbar-nav">
-                    {
-                    !isAuth
-                    ?
                     <Nav className="ms-auto">
-                        <Button onClick={() => navigate('/registration')} variant="primary" className={`me-3 ${classes.ButtonPrimary}`}>Sign up</Button>
-                        <Button onClick={() => navigate('/login')} variant="secondary">Log in</Button>
+                        {
+                        isFetchingUser
+                        ?
+                        <DotsLoading/>
+                        :
+                        !isAuth
+                        ?
+                        <Nav className="ms-auto">
+                            <Button onClick={() => navigate('/registration')} variant="primary" className={`me-3 ${classes.ButtonPrimary}`}>Sign up</Button>
+                            <Button onClick={() => navigate('/login')} variant="secondary">Log in</Button>
+                        </Nav>
+                        :
+                        <NavDropdown title={userData.username} className="ms-auto">
+                            <NavDropdown.Item>Your images</NavDropdown.Item>
+                            <NavDropdown.Item onClick={logOut}>Log out</NavDropdown.Item>
+                        </NavDropdown>
+                        }
                     </Nav>
-                    :
-                    <NavDropdown title={userData.username} className="ms-auto">
-                        <NavDropdown.Item>Your images</NavDropdown.Item>
-                        <NavDropdown.Item onClick={logOut}>Log out</NavDropdown.Item>
-                    </NavDropdown>
-                    }
                 </Navbar.Collapse>
             </Container>
         </Navbar>
