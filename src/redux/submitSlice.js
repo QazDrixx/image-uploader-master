@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-    isLoading: false,
+    isLoadingImage: false,
     isError: '',
 }
 
@@ -9,8 +9,8 @@ export const submitSlice = createSlice({
     name: 'submit',
     initialState,
     reducers: {
-        setLoadingState: (state, action) => {
-            state.isLoading = action.payload
+        setLoadingImage: (state, action) => {
+            state.isLoadingImage = action.payload
         },
         setErrorState: (state, action) => {
             state.isError = action.payload
@@ -18,5 +18,5 @@ export const submitSlice = createSlice({
     }
 })
 
-export const {setLoadingState, setErrorState } = submitSlice.actions
+export const {setLoadingImage, setErrorState } = submitSlice.actions
 export default submitSlice.reducer

@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { setLoadingState, setErrorState } from '../redux/submitSlice';
+import { setLoadingImage, setErrorState } from '../redux/submitSlice';
 
 export const useSendImageHandler = () => {
     const dispatch = useDispatch()
@@ -8,17 +8,21 @@ export const useSendImageHandler = () => {
 
     const sendImageHandler = async (callback) => {
         try {
-            dispatch(setLoadingState(true))
-            await callback();
+            dispatch(setLoadingImage(true))
+            const response = await callback();
+            console.log(response.data);
+            if (response.status === 200) {
+                navigate(`image/${response.data['_id']}`)
+            }
             // navigate()
         
         } catch (error) {
             dispatch(setErrorState(error.response.data))
             navigate('/error')
-            return error
+            console.log(error);
 
         } finally {
-            dispatch(setLoadingState(false))
+            dispatch(setLoadingImage(false))
         }
     };
 

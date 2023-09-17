@@ -19,6 +19,21 @@ export const getUser = async () => {
     return await imageUploaderApi.get('getUser/')
 }
 
+export const postFile = async (file) => {
+    const formData = new FormData();
+    formData.append('image', file);
+
+    return await imageUploaderApi.post('images/', formData, {
+        headers: {
+            'Content-Type': 'multipart/form-data',
+        },
+    });
+};
+
+export const getOneImage = async (imageId) => {
+    return await imageUploaderApi.get(`images/${imageId}`)
+}
+
 imageUploaderApi.interceptors.request.use((config) => {
     config.headers.Authorization = localStorage.getItem('token') || ''
     return config

@@ -9,10 +9,12 @@ export const useFetchUser = () => {
     useEffect(() => {
         (async function () {
             try {
-                const user = await getUser()
-                if(user.status === 200) {
-                    dispatch(setUserData(user.data))
-                    dispatch(setAuth(true))
+                if (localStorage.getItem('token')) {
+                    const user = await getUser()
+                    if(user.status === 200) {
+                        dispatch(setUserData(user.data))
+                        dispatch(setAuth(true))
+                    }
                 }
             } catch (err) {
                 console.error(err);
@@ -21,5 +23,5 @@ export const useFetchUser = () => {
                 dispatch(setFetchingUser(false))
             }
         }())
-    })
+    }, [dispatch])
 }

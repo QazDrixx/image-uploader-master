@@ -5,6 +5,6 @@ import submitSlice from "./submitSlice";
 export const store = configureStore({
     reducer: {
         auth: authSlice,
-        submit: submitSlice
+        submit: submitSlice,
     },
 })
