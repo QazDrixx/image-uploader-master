@@ -7,3 +7,9 @@
     user-select: none;
     align-self: center;
 }
+
+@media(max-width: 576px) {
+    .Or {
+        display: none;
+    }
+}

@@ -1,12 +1,9 @@
 @import '../../../scss/index.scss';
 
-.FormWrap {
-    @include wrap(25.125rem, 1.25rem 2.25rem);
-}
 
 .RegistrationHeader {
     display: flex;
-    align-items: center;
+    align-items: center
 }
 
 .HeaderText {
@@ -20,3 +17,16 @@
     margin-top: 1rem;
     padding: 0.5rem!important;
 }
+
+@media(max-width: 576px) {
+    .FormWrap {
+        @include mobileWrap()
+    }
+}
+
+@media(min-width: 576px) {
+    .FormWrap {
+        @include wrap(25.125rem, 1.25rem 2.25rem);
+    }
+}
+

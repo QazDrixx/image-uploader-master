@@ -1,9 +1,5 @@
 @import '../../scss/index.scss';
 
-.Wrap {
-    @include wrap(25.125rem, 2.25rem 2rem);
-}
-
 .Header {
     text-align: center;
 }
@@ -15,4 +11,25 @@
 .HeaderSubText {
     @include textStyle(#828282, 0.625rem, -0.02188rem);
     margin-top: 1rem;
+}
+
+@media(min-width: 576px) {
+    .Wrap {
+        @include wrap(25.125rem, 2.25rem 2rem);
+    }
+}
+
+@media(max-width: 576px) {
+    .Wrap {
+        @include mobileWrap();
+    }
+
+    .HeaderText {
+        font-size: 1.625rem;
+    }
+
+    .HeaderSubText {
+        font-size: 1.125rem;
+        margin-top: 1rem;
+    }
 }

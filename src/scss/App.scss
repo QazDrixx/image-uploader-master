@@ -1,3 +1,14 @@
+@import "/node_modules/bootstrap/scss/bootstrap";
+
+* {
+    box-sizing: border-box;
+}
+
+html, body {
+    margin: 0;
+    font-size: 18px;
+}
+
 .App {
     display: flex;
     flex-direction: column;
@@ -18,5 +29,11 @@
     align-items: center;
 }
 
+$btnBgColor: #2F80ED;
+$btnBorderColor: #2d7ee8;
+$btnHoverBgColor: #216ac9;
 
+.btn-primary {
+    @include button-variant($btnBgColor, $btnBorderColor, $color: #fff, $hover-background: $btnHoverBgColor, $disabled-color: #fff);
+}
 

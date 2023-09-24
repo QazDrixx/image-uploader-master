@@ -5,9 +5,9 @@
     @include textStyle(#4F4F4F, 1.25rem, normal);
 }
 
-.ButtonPrimary {
-    background-color: #2F80ED!important;
-    &:hover {
-        background-color: #216ac9!important;
-    }
+.AuthButtons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
 }

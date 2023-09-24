@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 export const FileChooser = ({sendImage}) => {
     return (
         <div className={classes.FileChooserWrap}>
-            <label htmlFor="FileChooser" className={classes.FileChooser__label}>
+            <label htmlFor="FileChooser" className={`btn btn-primary ${classes.FileChooser__label}`}>
                 Choose a file
                 <input
                     type="file"

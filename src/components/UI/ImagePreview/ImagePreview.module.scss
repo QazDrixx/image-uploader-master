@@ -1,0 +1,80 @@
+
+.li {
+    margin-top: 2rem;
+    border: 3px #71aeff solid;
+    border-radius: 0.5rem;
+    max-height: 6rem;
+}
+
+li:first-child {
+    margin-top: 1rem;
+}
+
+.liContent {
+    display: flex;
+    align-items: center;
+}
+
+.Preview {
+    width: 5rem;
+    height: 4rem;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    margin-right: 1rem;
+    cursor: pointer;
+}
+
+.imageName {
+    cursor: pointer;
+    transition: .25s all ease;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+
+    &:hover {
+        color: rgba(0, 0, 0, 0.5);
+    }
+}
+
+.removeImage {
+    cursor: pointer;
+    transition: .25s all ease;
+
+    &:hover {
+        opacity: 0.7;
+    }
+}
+
+@media(min-width: 576px) {
+    .liContent {
+        margin: 1rem;
+    }
+
+    .imageName {
+        max-width: 40ch;
+    }
+
+    .removeImage {
+        margin: 0 1rem 0 auto;
+    }
+}
+
+@media(max-width: 576px) {
+    .li {
+        width: 100%;
+    }
+    
+    .liContent {
+        margin: 0.5rem;
+    }
+
+    .imageName  {
+        max-width: 20ch;
+    }
+
+    .removeImage {
+        margin-left: auto;
+    }
+}
+

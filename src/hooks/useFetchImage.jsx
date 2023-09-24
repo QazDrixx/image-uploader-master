@@ -1,29 +1,26 @@
-import { useEffect, useState } from "react"
-import { getOneImage } from "../services/axios"
+import { useEffect } from "react"
 import { setLoadingImage } from "../redux/submitSlice"
 import { useDispatch } from "react-redux"
+import { useNavigate } from "react-router-dom"
 
-export const useFetchImage = (imageId) => {
-    const [imageData, setImageData] = useState()
+export const useFetchImage = (callback) => {
+    const navigate = useNavigate()
     const dispatch = useDispatch()
 
     useEffect(() => {
         const fetchImage = async () => {      
             try {
                 dispatch(setLoadingImage(true))
-                const image = await getOneImage(imageId)
-                if (image.status === 200) {
-                    setImageData(image.data)
-                }
+                await callback()
     
             } catch (error) {
+                navigate('/error')
                 console.log(error);
             } finally {
                 dispatch(setLoadingImage(false))
             }
         }
         fetchImage()
-    }, [imageId, dispatch])
-
-    return imageData
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
 }

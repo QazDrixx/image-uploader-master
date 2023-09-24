@@ -34,6 +34,10 @@ export const getOneImage = async (imageId) => {
     return await imageUploaderApi.get(`images/${imageId}`)
 }
 
+export const getAllImages = async () => {
+    return await imageUploaderApi.get('images/')
+}
+
 imageUploaderApi.interceptors.request.use((config) => {
     config.headers.Authorization = localStorage.getItem('token') || ''
     return config

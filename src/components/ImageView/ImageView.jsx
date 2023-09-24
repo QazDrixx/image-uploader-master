@@ -1,15 +1,25 @@
-import classes from './ImagePreview.module.scss'
+import classes from './ImageView.module.scss'
 import { Success } from '../UI/SvgComponents/Success'
 import { useParams } from 'react-router-dom';
 import { useFetchImage } from '../../hooks/useFetchImage';
 import { ImageLoading } from '../ImageLoading/ImageLoading';
 import { useSelector } from 'react-redux';
+import { useState } from 'react';
+import { getOneImage } from '../../services/axios';
 
-export const ImagePreview = () => {
+export const ImageView = () => {
     const { imageId } = useParams()
     const isLoadingImage = useSelector(state => state.submit.isLoadingImage)
-    const imageData = useFetchImage(imageId)
-    console.log(imageData);
+    const [imageData, setImageData] = useState()
+
+    useFetchImage(async () => {
+        const image = await getOneImage(imageId)
+        if (image.status === 200) {
+            setImageData(image.data)
+        }
+    })
+
+    // console.log(imageData);
 
     return (
         <>
@@ -36,7 +46,7 @@ export const ImagePreview = () => {
                     <a href={imageData.imageURL} className={classes.Url}>
                         {imageData.imageURL}
                     </a>
-                    <div className={classes.CopyLink} onClick={() => {navigator.clipboard.writeText(imageData.imageURL)}}>
+                    <div className={`btn btn-primary ${classes.CopyLink}`} onClick={() => {navigator.clipboard.writeText(imageData.imageURL)}}>
                         Copy Link
                     </div>
                 </div>

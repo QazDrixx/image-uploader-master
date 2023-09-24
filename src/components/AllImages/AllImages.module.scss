@@ -1,0 +1,26 @@
+@import '../../scss/index.scss';
+
+.Wrap {
+    overflow-y: auto;
+}
+
+.ul {
+    list-style: none;
+    padding: 0;
+}
+
+@media(min-width: 576px) {
+    .Wrap {
+        @include wrap(85%, 2.25rem 1.95rem 2.08rem 2.95rem);
+        align-self: flex-start;
+        margin-top: 2.5rem;
+        height: 75vh;
+    }
+}
+
+@media(max-width: 576px) {
+    .Wrap {
+        @include mobileWrap();
+        margin-top: 1.5rem;
+    }
+}

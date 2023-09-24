@@ -1,8 +1,10 @@
 import { useDispatch } from "react-redux";
 import { setAuth, setLoadingAuth, setAuthError, setUserData } from "../redux/authSlice";
+import { useNavigate } from "react-router-dom";
 
 export const useAuthHandler = () => {
     const dispatch = useDispatch()
+    const navigate = useNavigate()
 
     return async (callback) => {
         try {
@@ -18,7 +20,8 @@ export const useAuthHandler = () => {
             else dispatch(setAuthError(responce.data.msg))
 
         } catch (error) {
-            console.log(error);
+            navigate('/error/')
+            console.error(error);
         } finally {
             dispatch(setLoadingAuth(false))
         }
