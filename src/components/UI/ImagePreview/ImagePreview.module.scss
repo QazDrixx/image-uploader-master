@@ -3,11 +3,8 @@
     margin-top: 2rem;
     border: 3px #71aeff solid;
     border-radius: 0.5rem;
-    max-height: 6rem;
-}
-
-li:first-child {
-    margin-top: 1rem;
+    max-height: 7rem;
+    
 }
 
 .liContent {
@@ -16,13 +13,25 @@ li:first-child {
 }
 
 .Preview {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-right: 1rem;
+}
+
+.Image {
     width: 5rem;
-    height: 4rem;
+    height: 3rem;
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
-    margin-right: 1rem;
     cursor: pointer;
+    margin-bottom: 0.5rem;
+}
+
+.createdAt {
+    font-size: 0.5rem;
 }
 
 .imageName {
@@ -47,12 +56,12 @@ li:first-child {
 }
 
 @media(min-width: 576px) {
-    .liContent {
-        margin: 1rem;
+    .li {
+        padding: 1rem;
     }
 
     .imageName {
-        max-width: 40ch;
+        max-width: 70ch;
     }
 
     .removeImage {
@@ -65,8 +74,8 @@ li:first-child {
         width: 100%;
     }
     
-    .liContent {
-        margin: 0.5rem;
+    .li {
+        padding: 0.5rem;
     }
 
     .imageName  {
