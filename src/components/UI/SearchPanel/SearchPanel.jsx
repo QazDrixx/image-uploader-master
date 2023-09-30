@@ -8,7 +8,13 @@ export const SearchPanel = () => {
         <div className={classes.searchPanelWrap}>
             <SearchInput/>
             <FavoritesFilter/>
-            <Sort/>
+            <Sort
+                sortOpions={[
+                    {name:'Newest', imageDataField:'createdAt', isReverse:true}, 
+                    {name:'Latest', imageDataField:'createdAt'},
+                    {name:'Alphabetically', imageDataField:'imageOriginalName'}
+                ]}
+            />
         </div>
     )
 }

@@ -5,7 +5,7 @@ import { ImagePreview } from "../UI/ImagePreview/ImagePreview"
 import { useSelector, useDispatch } from 'react-redux'
 import { ImageLoading } from '../ImageLoading/ImageLoading'
 import { SearchPanel } from '../UI/SearchPanel/SearchPanel'
-import { setImages } from '../../redux/submitSlice'
+import { setImages, setFilteredImages } from '../../redux/submitSlice'
 
 
 export const AllImages = () => {
@@ -14,9 +14,13 @@ export const AllImages = () => {
     const dispatch = useDispatch()
 
     useFetchImage(async () => {
-        const Fetchedimages = await getAllImages()
-        if (Fetchedimages.status === 200) {
-            dispatch(setImages(Fetchedimages.data))
+        if (filteredImages.length == 0) {
+            const Fetchedimages = await getAllImages()
+            if (Fetchedimages.status === 200) {
+                console.log(1);
+                dispatch(setImages(Fetchedimages.data))
+                dispatch(setFilteredImages(Fetchedimages.data))
+            }
         }
     })
 
@@ -40,7 +44,7 @@ export const AllImages = () => {
             {        
             imageList.length === 0
             ?
-            <p>Images not found</p>
+            <div className={classes.notFound}>Images not found</div>
             :
             <ul className={classes.ul}>
                 {imageList}

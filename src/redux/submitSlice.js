@@ -4,6 +4,7 @@ const initialState = {
     isLoadingImage: false,
     images: [],
     filteredImages: [],
+    sortType: {}
 }
 
 export const submitSlice = createSlice({
@@ -19,8 +20,11 @@ export const submitSlice = createSlice({
         setFilteredImages: (state, action) => {
             state.filteredImages = action.payload
         },
+        setSortTypeGlobal: (state, action) => {
+            state.sortType = action.payload
+        },
     }
 })
 
-export const {setLoadingImage, setImages, setFilteredImages } = submitSlice.actions
+export const {setLoadingImage, setImages, setFilteredImages, setSortTypeGlobal } = submitSlice.actions
 export default submitSlice.reducer
