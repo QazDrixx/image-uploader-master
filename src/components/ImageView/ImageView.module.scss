@@ -47,6 +47,8 @@
 
 .CopyLink {
     @include textStyle(#fff, 0.5rem, -0.0175rem);
-    @include button(0.56rem 1.06rem 0.56rem 1.25rem);
+    border: none;
+    border-radius: 0.5rem;
+    padding: 0.56rem 1.06rem 0.56rem 1.25rem;
     margin-left: 0.93rem;
 }

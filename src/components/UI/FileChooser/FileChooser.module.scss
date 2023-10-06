@@ -1,6 +1,4 @@
 @import '../../../scss/index.scss';
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@500&family=Poppins:wght@500&display=swap');
-
 
 .FileChooserWrap {
     margin-top: 1.35rem;
@@ -12,7 +10,22 @@
 }
 
 .FileChooser__label {
-    @include textStyle(#fff, 0.75rem, -0.02625rem);
-    @include button(0.5rem 1rem);
+    border: none;
     font-family: Noto Sans;
+    @include textStyle(#fff, 0.75rem, -0.02625rem);
+}
+
+@media (min-width: 576px) {
+    .FileChooser__label {
+        padding: 0.5rem 1rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .FileChooser__label {
+        font-size: 1.25rem;
+        padding: 1rem 1.5rem;
+        width: 87.5%;
+        border-radius: 0.875rem;
+    }
 }

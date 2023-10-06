@@ -17,3 +17,10 @@
     pointer-events: none;
     user-select: none;
 }
+
+
+@media(max-width: 576px) {
+    .DropArea {
+        display: none;
+    }
+}

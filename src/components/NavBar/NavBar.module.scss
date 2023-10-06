@@ -1,6 +1,13 @@
 @import '../../scss/index.scss';
 
-.Link {
+.HomeLink {
     text-decoration: none;
     @include textStyle(#4F4F4F, 1.25rem, normal);
+}
+
+.AuthButtons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
 }

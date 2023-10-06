@@ -1,0 +1,89 @@
+
+.li {
+    margin-top: 2rem;
+    border: 3px #71aeff solid;
+    border-radius: 0.5rem;
+    max-height: 7rem;
+    
+}
+
+.liContent {
+    display: flex;
+    align-items: center;
+}
+
+.Preview {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-right: 1rem;
+}
+
+.Image {
+    width: 5rem;
+    height: 3rem;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    cursor: pointer;
+    margin-bottom: 0.5rem;
+}
+
+.createdAt {
+    font-size: 0.5rem;
+}
+
+.imageName {
+    cursor: pointer;
+    transition: .25s all ease;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+
+    &:hover {
+        color: rgba(0, 0, 0, 0.5);
+    }
+}
+
+.removeImage {
+    cursor: pointer;
+    transition: .25s all ease;
+
+    &:hover {
+        opacity: 0.7;
+    }
+}
+
+@media(min-width: 576px) {
+    .li {
+        padding: 1rem;
+    }
+
+    .imageName {
+        max-width: 70ch;
+    }
+
+    .removeImage {
+        margin: 0 1rem 0 auto;
+    }
+}
+
+@media(max-width: 576px) {
+    .li {
+        width: 100%;
+    }
+    
+    .li {
+        padding: 0.5rem;
+    }
+
+    .imageName  {
+        max-width: 20ch;
+    }
+
+    .removeImage {
+        margin-left: auto;
+    }
+}
+

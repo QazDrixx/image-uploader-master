@@ -5,15 +5,22 @@
     background-color: #FAFAFB;
 }
 
+.Header {
+    font-family: 'Montserrat';
+}
+
 .Main {
     display: flex;
     justify-content: center;
     align-items: center;
     flex: 1;
+    font-family: 'Poppins', sans-serif;
 }
 
 .Footer {
     display: flex;
     justify-content: center;
     align-items: center;
+    font-family: 'Montserrat';
+    margin-top: 1rem;
 }

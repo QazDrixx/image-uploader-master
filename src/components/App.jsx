@@ -1,34 +1,29 @@
 import '../scss/App.scss';
 import { ImageUploader } from './ImageUploader/ImageUploader';
-import { ImageLoading } from './ImageLoading/ImageLoading';
-import { ImagePreview } from './ImagePreview/ImagePreview';
-import { useSendImage } from '../hooks/useSendImage';
-import { useState } from 'react';
-import { postFile } from '../services/postFile';
+import { ImageView } from './ImageView/ImageView';
+import { UserRegistration } from './UserRegistration/UserRegistration';
 import { UploadError } from './uploadError/uploadError';
-import Layout from './Layout/Layout';
-import { Route, Routes, useNavigate } from 'react-router-dom';
+import { Layout } from './Layout/Layout';
+import { Route, Routes} from 'react-router-dom';
+import { UserLogin } from './UserLogin/UserLogin';
+import { useFetchUser } from '../hooks/useFetchUser';
+import { AllImages } from './AllImages/AllImages';
+
 
 function App() {
 
-    const [imageData, setImageData] = useState();
-    const [handleSendingImage, uploadStage] = useSendImage();
-    const navigate = useNavigate()
-
-    const sendImage = async (image) => {
-        handleSendingImage(async () => {
-            const response = await postFile(image);
-            setImageData(response.data);
-            navigate(`image/${response.data['filename']}`)
-        });
-    };
+    useFetchUser()
 
     return (
         <>
         <Routes>
             <Route path='/' element={<Layout/>}>
-                <Route index element={uploadStage.isLoading?<ImageLoading />:<ImageUploader sendImage={sendImage}/>} />
-                <Route path='image/:imageName' element={<ImagePreview imageData={imageData} />}/>
+                <Route index element={<ImageUploader/>} />
+
+                <Route path='/registration' element={<UserRegistration />}/>
+                <Route path='/login' element={<UserLogin/> }/>
+                <Route path='image/:imageId' element={<ImageView />}/>
+                <Route path='/allImages' element={<AllImages />}/>
                 <Route path='error' element={<UploadError />}/>
             </Route>
         </Routes>  
