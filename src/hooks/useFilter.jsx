@@ -7,7 +7,7 @@ export const useSearchFilter = () => {
     return useCallback((searchValue, images, sortType)  => {
         const {imageDataField, isReverse} = sortType
         console.log(sortType);
-        const sortedImages = sort(imageDataField, images, isReverse)
+        const sortedImages = sort(imageDataField, [...images], isReverse)
         return sortedImages.filter((image) => {
             return image.imageOriginalName.toLowerCase().includes(searchValue.trim().toLowerCase())
         })

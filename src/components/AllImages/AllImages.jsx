@@ -14,13 +14,10 @@ export const AllImages = () => {
     const dispatch = useDispatch()
 
     useFetchImage(async () => {
-        if (filteredImages.length == 0) {
-            const Fetchedimages = await getAllImages()
-            if (Fetchedimages.status === 200) {
-                console.log(1);
-                dispatch(setImages(Fetchedimages.data))
-                dispatch(setFilteredImages(Fetchedimages.data))
-            }
+        const Fetchedimages = await getAllImages()
+        if (Fetchedimages.status === 200) {
+            dispatch(setImages(Fetchedimages.data))
+            dispatch(setFilteredImages(Fetchedimages.data))
         }
     })
 

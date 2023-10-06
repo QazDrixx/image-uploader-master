@@ -4,7 +4,8 @@ import Container from 'react-bootstrap/Container';
 import { Nav, Navbar, NavDropdown, Button } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
 import { DotsLoading } from '../UI/DotsLoaing/DotsLoading';
-import { LogOutModalWindow } from '../UI/modalWindows/LogOutModalWindow';
+import { ModalWindow } from '../UI/modalWindows/ModalWindow';
+import { useLogOut } from '../../hooks/useLogOut';
 
 
 export const NavBar = () => {
@@ -12,6 +13,8 @@ export const NavBar = () => {
     const userData = useSelector((state) => state.auth.userData)
     const isFetchingUser = useSelector((state) => state.auth.isFetchingUser)
     const navigate = useNavigate()
+    const logOut = useLogOut()
+
 
     return (
         <Navbar expand="lg" className='bg-body-tertiary'>
@@ -35,7 +38,13 @@ export const NavBar = () => {
                         <NavDropdown title={userData.username}>
                             <NavDropdown.Item onClick={() => navigate('/allImages')}>Your images</NavDropdown.Item>
                             <NavDropdown.Item>
-                                <LogOutModalWindow/>
+                                <ModalWindow 
+                                title='Do you really want to leave?'
+                                agreeButtonText='Log out'
+                                disagreeButtonText='Stay'
+                                showModalBtn='Log Out'
+                                callback={logOut}
+                                />
                             </NavDropdown.Item>
                         </NavDropdown>
                         }

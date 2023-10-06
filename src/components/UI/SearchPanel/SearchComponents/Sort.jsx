@@ -15,7 +15,7 @@ export const Sort = ({ sortOpions }) => {
     
 
     const sortImages = useCallback((imageDataField, images, isReverse) => {
-        const sortedImages = sort(imageDataField, images, isReverse)
+        const sortedImages = sort(imageDataField, [...images], isReverse)
         // console.log(sortedImages);
         dispatch(setFilteredImages(sortedImages))
         dispatch(setSortTypeGlobal(sortType))
@@ -23,7 +23,7 @@ export const Sort = ({ sortOpions }) => {
 
     useEffect(() => {
         const { imageDataField, isReverse } = sortType
-        sortImages(imageDataField, images, isReverse)
+        sortImages(imageDataField, [...images], isReverse)
         console.log(imageDataField, isReverse);
 
     // eslint-disable-next-line react-hooks/exhaustive-deps

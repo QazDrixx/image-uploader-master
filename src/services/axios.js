@@ -38,6 +38,10 @@ export const getAllImages = async () => {
     return await imageUploaderApi.get('images/')
 }
 
+export const deleteImage = async (imageId) => {
+    return await imageUploaderApi.delete(`/images/${imageId}`)
+}
+
 imageUploaderApi.interceptors.request.use((config) => {
     config.headers.Authorization = localStorage.getItem('token') || ''
     return config

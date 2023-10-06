@@ -20,7 +20,7 @@ export const SearchInput = () => {
 
 
     useEffect(() => {
-        const foudnImages = searchImages(debounceValue, images, sortType)
+        const foudnImages = searchImages(debounceValue, [...images], sortType)
         // console.log(foudnImages);
         setGETqueries(debounceValue, 'searchValue', setSearchValue, isChangeInput)
         dispatch(setFilteredImages(foudnImages))
