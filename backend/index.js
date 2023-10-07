@@ -9,20 +9,24 @@ import { userValiadation } from "./services/validation.js";
 import { storage, fileFilter } from "./services/storage.js";
 import * as imageController from "./controllers/uploadFile.js";
 import * as userController from './controllers/userController.js'
+import 'dotenv'
 
 config({path: '../.env'})
 const upload = multer({ storage: storage, fileFilter:fileFilter })
 const app = express()
 
-mongoose.connect('mongodb+srv://qazdrixx:8aXQUWhsz0UngeI9@cluster0.pxfblkb.mongodb.net/image-upload-master?retryWrites=true&w=majority')
-    .then(() => console.log('db ok'))
+const DB_URI = process.env.DB_URI
+const FRONTEND_URL = process.env.FRONTEND_URL || 'http://localhost:5173'
+
+mongoose.connect(DB_URI)
+    .then(() => console.log(`db ok, db URI is: ${DB_URI}`))
     .catch(err => console.log(err))
 
 app.use('/media', express.static('media'));
 app.use(express.json())
 app.use(morgan('dev'))
 app.use(cors({
-    origin: ['http://localhost:5173', ]
+    origin: ['http://localhost:5173', FRONTEND_URL]
 }));
 
 
