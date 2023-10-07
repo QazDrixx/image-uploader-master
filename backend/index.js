@@ -22,7 +22,7 @@ app.use('/media', express.static('media'));
 app.use(express.json())
 app.use(morgan('dev'))
 app.use(cors({
-    origin: ['http://localhost:5173', ]
+    origin: ['http://localhost:5173', 'https://m8dfrc4d-5173.euw.devtunnels.ms', ]
 }));
 
 

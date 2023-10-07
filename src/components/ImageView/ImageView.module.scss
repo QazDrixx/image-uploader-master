@@ -1,8 +1,5 @@
 @import '../../scss/index.scss';
 
-.Wrap {
-    @include wrap(25.02244rem, 2.25rem 1.95rem 2.08rem 2.95rem);
-}
 
 .Header {
     display: flex;
@@ -51,4 +48,17 @@
     border-radius: 0.5rem;
     padding: 0.56rem 1.06rem 0.56rem 1.25rem;
     margin-left: 0.93rem;
+}
+
+@media(min-width: 576px) {
+    .Wrap {
+        @include wrap(25.02244rem, 2.25rem 1.95rem 2.08rem 2.95rem);
+    }
+}
+
+@media(max-width: 576px) {
+    .Wrap {
+        @include mobileWrap();
+        margin-top: 1.5rem;
+    }
 }
