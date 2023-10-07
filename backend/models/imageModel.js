@@ -2,12 +2,6 @@ import mongoose, { Schema } from "mongoose";
 
 const imageModel = new mongoose.Schema({
 
-    imageUniqueName: {
-        type: String,
-        required: true,
-        unique: true
-    },
-    
     imageOriginalName: {
         type: String,
         required: true

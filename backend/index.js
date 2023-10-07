@@ -44,6 +44,8 @@ app.post('/login', userController.userLogin)
 
 app.get('/getUser', checkUser, userController.getUser)
 
+app.patch('/images/:id', checkUser, imageController.updateImage)
+
 const PORT = process.env.PORT || 5555
 
 app.listen(PORT, (err) => {

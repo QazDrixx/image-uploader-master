@@ -10,8 +10,7 @@ export const userRegistration = async (req, res) => {
     try {
         const validate = validationResult(req)
         if (!validate.isEmpty()) return res.status(400).json({msg: 'Incorrect email/username or password'})
-        
-        const {fullname, username, email, password} = req.body
+        const { username, email, password } = req.body
         
         const userExist = await userSchema.exists({$or:[{username:username}, {email:email}]})
         if (userExist) return res.status(400).json({msg: 'Such user already exist'});
@@ -20,7 +19,6 @@ export const userRegistration = async (req, res) => {
         const passwordHash = await bcrypt.hash(password, salt)
 
         const doc = new userSchema({
-            fullname: fullname,
             username: username,
             email: email,
             password: passwordHash

@@ -61,3 +61,13 @@ export const deleteImage = async (req, res) => {
         res.status(500).json({msg: err.message});
     }
 }
+
+export const updateImage = async (req, res) => {
+    try {
+        const image = await imageModel.findOneAndUpdate({$and:[{owner: req.userId}, {_id: req.params.id}]}, req.body, {new:true})
+        res.json(image)
+    } catch (err) {
+        console.log(err);
+        res.status(500).json({msg: err.message});
+    }
+}
