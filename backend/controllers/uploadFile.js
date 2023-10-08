@@ -5,7 +5,7 @@ import imageModel from '../models/imageModel.js';
 export const uploadImage = async (req, res) => {
     try {
         if (!req.file) throw new Error("No image file provided");
-        console.log(req.file);
+        // console.log(req.file);
         const {originalname, filename, destination, path} = req.file
 
         const doc = new imageModel({
@@ -56,6 +56,16 @@ export const deleteImage = async (req, res) => {
         rm(image.imagePath, {recursive:true}, (err) => {if(err) throw new Error(err)})
         
         res.json({msg: 'Image deleted successfully'})
+    } catch (err) {
+        console.log(err);
+        res.status(500).json({msg: err.message});
+    }
+}
+
+export const updateImage = async (req, res) => {
+    try {
+        const image = await imageModel.findOneAndUpdate({$and:[{owner: req.userId}, {_id: req.params.id}]}, req.body, {new:true})
+        res.json(image)
     } catch (err) {
         console.log(err);
         res.status(500).json({msg: err.message});
