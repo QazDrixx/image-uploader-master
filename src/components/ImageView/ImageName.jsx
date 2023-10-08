@@ -5,10 +5,18 @@ import { Form } from 'react-bootstrap';
 import { useState } from 'react';
 import { Accept } from '../UI/SvgComponents/Accept';
 import { Cancel } from '../UI/SvgComponents/Cancel';
+import { updateImage } from '../../services/axios';
 
 export const ImageName = ({imageData}) => {
     const [isEditing, setEditing] = useState(false)
-    const [inputVaule, setInputValue] = useState(imageData.imageOriginalName)
+    const [imageName, setImageName] = useState(imageData.imageOriginalName)
+
+    const handleSubmit = async(e) => {
+        e.preventDefault()
+        const updatedImage = await updateImage(imageData._id, {imageOriginalName:imageName})
+        console.log(updatedImage);
+        setEditing(false)
+    }
 
     return (
         <div className={classes.Preview}>
@@ -16,16 +24,17 @@ export const ImageName = ({imageData}) => {
                 {
                     isEditing
                     ?
-                    <Form onSubmit={(e) => e.preventDefault()} className={classes.EditImageNameForm}>
+                    <Form onSubmit={handleSubmit} 
+                    className={classes.EditImageNameForm}>
                             <Form.Control
                                 type="text"
-                                value={inputVaule}
+                                value={imageName}
                                 autoFocus={true}
-                                onChange={(e) => setInputValue(e.target.value)}
+                                onChange={(e) => setImageName(e.target.value)}
                                 className={classes.EditImageNameInput}
                             />
-                            <div className={classes.Edit}><Accept/></div>
-                            <div 
+                            <button type='submit' className={`${classes.Edit} ${classes.blankButton}`}><Accept/></button>
+                            <div
                                 className={classes.Edit} 
                                 style={{marginTop:'0.1rem'}}
                                 onClick={() => setEditing(false)}
@@ -35,7 +44,7 @@ export const ImageName = ({imageData}) => {
                     </Form>
                     :
                     <>
-                    <div>{imageData.imageOriginalName}</div>
+                    <div title='Image name'>{imageName}</div>
                     <div className={classes.Edit} onClick={() => setEditing(true)}>
                         <Edit />
                     </div>
