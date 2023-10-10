@@ -7,9 +7,11 @@ import { login } from '../../services/axios';
 import { useAuthHandler } from '../../hooks/useAuthHandler';
 import { useSelector } from 'react-redux';
 import { DotsLoading } from '../UI/DotsLoaing/DotsLoading';
+import { useNavigate } from 'react-router-dom';
 
 export const UserRegistration = () => {
     const handleAuth = useAuthHandler();
+    const navigate = useNavigate()
     const isLoadingAuth = useSelector((state) => state.auth.isLoadingAuth)
     const submitRegistration = async (values) => {
         handleAuth(async () => await login(values, true))
@@ -79,7 +81,7 @@ export const UserRegistration = () => {
                                 {errors.password}
                             </Form.Control.Feedback>
                         </Form.Group>
-
+                        <div onClick={() => navigate('/login/')} className={classes.Already}>Already have an account? Sign in</div>
                         <Button 
                             type="submit" 
                             disabled={!(dirty && isValid)} 
@@ -92,6 +94,7 @@ export const UserRegistration = () => {
                     </Form>
                 )}
             </Formik>
+
         </FormWrap>
     );
 };

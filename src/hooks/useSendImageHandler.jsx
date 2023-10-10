@@ -14,6 +14,9 @@ export const useSendImageHandler = () => {
                 console.log(response.data);
                 navigate(`image/${response.data['_id']}`)
             }
+            else if (response.status === 401) {
+                navigate('registration/')
+            }
             // navigate()
         
         } catch (error) {

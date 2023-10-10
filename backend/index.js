@@ -19,7 +19,7 @@ const DB_URI = process.env.DB_URI
 const FRONTEND_URL = process.env.FRONTEND_URL || 'http://localhost:5173'
 
 mongoose.connect(DB_URI)
-    .then(() => console.log(`db ok, db URI is: ${DB_URI}`))
+    .then(() => console.log(`db is ok, db URI is: ${DB_URI}`))
     .catch(err => console.log(err))
 
 app.use('/media', express.static('media'));
