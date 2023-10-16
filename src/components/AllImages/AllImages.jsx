@@ -27,7 +27,7 @@ export const AllImages = () => {
         )
     })
 
-    console.log(filteredImages);
+    // console.log(filteredImages);
 
     return (
         <>
