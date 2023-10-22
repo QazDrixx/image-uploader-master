@@ -1,40 +1,40 @@
-// import classes from '../SearchPanel.module.scss'
 import { Dropdown, DropdownButton } from 'react-bootstrap';
 import PropTypes from 'prop-types';
+import { useCallback, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useSort } from '../../../../hooks/useFilter';
-import { useSelector, useDispatch } from 'react-redux';
-import { setFilteredImages, setSortTypeGlobal } from '../../../../redux/submitSlice';
-import { useCallback, useEffect, useState } from 'react';
+import { setImages, setFilteredImages, setSortType } from '../../../../redux/submitSlice';
 
+export const Sort = ({ sortOptions }) => {
+    const images = useSelector(state => state.submit.images)
+    const sortType = useSelector(state => state.submit.sortType) 
+    const isShownFavorites = useSelector(state => state.submit.isShownFavorites)
+    const searchValue = useSelector(state => state.submit.searchValue)
 
-export const Sort = ({ sortOpions }) => {
-    const [sortType, setSortTypeLocal] = useState(sortOpions[0])
     const dispatch = useDispatch()
-    const images = useSelector((state) => state.submit.filteredImages);
-    const sort = useSort();
-    
+    const sort = useSort()
 
-    const sortImages = useCallback((imageDataField, images, isReverse) => {
-        const sortedImages = sort(imageDataField, [...images], isReverse)
-        // console.log(sortedImages);
+    const sortHandle = useCallback((sortOption) => {
+        const {imageDataField, isReverse} = sortOption
+        const sortedImages = sort(imageDataField, images, isReverse)
         dispatch(setFilteredImages(sortedImages))
-        dispatch(setSortTypeGlobal(sortType))
-    }, [dispatch, sort, sortType])
+        dispatch(setImages(sortedImages))
+    }, [dispatch, sort, images]) 
 
     useEffect(() => {
-        const { imageDataField, isReverse } = sortType
-        sortImages(imageDataField, [...images], isReverse)
-        console.log(imageDataField, isReverse);
-
+        
+        if (Object.keys(sortType).length === 0) sortHandle(sortOptions[0])
+        else sortHandle(sortType)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [sortType])
+    }, [sortType, isShownFavorites, searchValue])
 
-    const dropdownItems = sortOpions.map((option) => {
+    const dropdownItems = sortOptions.map((option) => {
         const {name} = option
         return (
-            <Dropdown.Item
-                key={name}
-                onClick={() => {setSortTypeLocal(option)}}
+            <Dropdown.Item 
+            key={name}
+            onClick={() => dispatch(setSortType(option))
+            }
             >
                 {name}
             </Dropdown.Item>
@@ -42,12 +42,12 @@ export const Sort = ({ sortOpions }) => {
     });
 
     return (
-        <DropdownButton variant="outline-secondary" title={sortType.name}>
+        <DropdownButton variant="outline-secondary" title={sortType.name || sortOptions[0].name}>
             {dropdownItems}
         </DropdownButton>
     );
 };
 
 Sort.propTypes = {
-    sortOpions: PropTypes.array,
+    sortOptions: PropTypes.array,
 };

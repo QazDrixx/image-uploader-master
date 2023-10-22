@@ -1,19 +1,28 @@
 import { Button } from "react-bootstrap"
+import { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { setFilteredImages } from "../../../../redux/submitSlice"
+import { setShownFavorites, setFilteredImages } from "../../../../redux/submitSlice"
+import { useSearchFilter } from "../../../../hooks/useFilter"
 
 export const FavoritesFilter = () => {
-    const images = useSelector(state => state.submit.filteredImages)
+    const searchValue = useSelector(state => state.submit.searchValue)
+    const isShownFavorites = useSelector(state => state.submit.isShownFavorites)
+    const images = useSelector(state => state.submit.images)
+    const search = useSearchFilter()
+
     const dispatch = useDispatch()
-    const showFavorite = () => {
-        const favoriteImages = images.filter((el) => el.favorite)
-        console.log(favoriteImages);
-        dispatch(setFilteredImages(favoriteImages))
-    }
+    
+    useEffect(() => {
+        if (isShownFavorites) {
+            dispatch(setFilteredImages(search(searchValue, images.filter((image) => image.favorite))))
+        }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [isShownFavorites, dispatch, searchValue, images])
 
     return (
-        <Button variant="outline-primary" 
-        onClick={showFavorite}
+        <Button 
+        variant={isShownFavorites?'primary':'outline-primary'} 
+        onClick={() => dispatch(setShownFavorites(!isShownFavorites))}
         >
             Favorite
         </Button>
