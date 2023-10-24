@@ -7,10 +7,12 @@ import { DotsLoading } from '../UI/DotsLoaing/DotsLoading';
 import { useSelector } from 'react-redux';
 import { loginSchema } from '../../services/validation';
 import { login } from '../../services/axios';
+import { useNavigate } from 'react-router-dom';
 
 
 export const UserLogin = () => {
     const handleAuth = useAuthHandler()
+    const navigate = useNavigate()
     const isLoadingAuth = useSelector(state => state.auth.isLoadingAuth)
     const submitLogin = async (values) => {
         handleAuth(async () => await login(values))
@@ -61,6 +63,7 @@ export const UserLogin = () => {
                             {errors.password}
                         </Form.Control.Feedback>
                     </Form.Group>
+                    <div onClick={() => navigate('/registration/')} className={classes.Already}> Not have an account? Register</div>
                     <Button 
                         type="submit" 
                         disabled={!(dirty && isValid)} 

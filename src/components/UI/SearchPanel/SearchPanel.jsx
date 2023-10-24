@@ -4,14 +4,15 @@ import { FavoritesFilter } from './SearchComponents/FavoritesFilter'
 import { Sort } from './SearchComponents/Sort'
 
 export const SearchPanel = () => {
+    
     return (
         <div className={classes.searchPanelWrap}>
             <SearchInput/>
             <FavoritesFilter/>
             <Sort
-                sortOpions={[
+                sortOptions={[
                     {name:'Newest', imageDataField:'createdAt', isReverse:true}, 
-                    {name:'Latest', imageDataField:'createdAt'},
+                    {name:'Oldest', imageDataField:'createdAt'},
                     {name:'Alphabetically', imageDataField:'imageOriginalName'}
                 ]}
             />

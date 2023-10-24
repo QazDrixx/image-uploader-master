@@ -5,29 +5,36 @@ import { ImagePreview } from "../UI/ImagePreview/ImagePreview"
 import { useSelector, useDispatch } from 'react-redux'
 import { ImageLoading } from '../ImageLoading/ImageLoading'
 import { SearchPanel } from '../UI/SearchPanel/SearchPanel'
-import { setImages, setFilteredImages } from '../../redux/submitSlice'
+import { setImages } from '../../redux/submitSlice'
+import { useEffect } from 'react'
 
 
 export const AllImages = () => {
     const isLoadingImage = useSelector(state => state.submit.isLoadingImage)
-    const filteredImages = useSelector(state => state.submit.filteredImages)
+    const images = useSelector(state => state.submit.filteredImages)
     const dispatch = useDispatch()
 
     useFetchImage(async () => {
         const Fetchedimages = await getAllImages()
         if (Fetchedimages.status === 200) {
             dispatch(setImages(Fetchedimages.data))
-            dispatch(setFilteredImages(Fetchedimages.data))
         }
     })
 
-    const imageList = filteredImages.map(imageData => {
+    useEffect(() => {
+        return () => {
+            dispatch(setImages([]))
+        }
+    }, [dispatch])
+
+
+    const imageList = images.map(imageData => {
         return (
             <ImagePreview imageData={imageData} key={imageData._id}/>
         )
     })
 
-    console.log(filteredImages);
+    // console.log(images);
 
     return (
         <>

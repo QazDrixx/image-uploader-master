@@ -1,40 +1,31 @@
 import classes from '../SearchPanel.module.scss';
 import { Form } from 'react-bootstrap';
-import {  useEffect, useState } from 'react';
-import { useDebounce } from '../../../../hooks/useDebounce';
-import { useSelector, useDispatch } from 'react-redux';
-import { setFilteredImages } from '../../../../redux/submitSlice';
-import { useSearchFilter, useGETqueries } from '../../../../hooks/useFilter';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useSearchFilter } from '../../../../hooks/useFilter';
+import { setFilteredImages, setSearchValue } from '../../../../redux/submitSlice';
 
 
 export const SearchInput = () => {
-    const [searchValue, setSearchValue] = useState('')
-    const [isChangeInput, setChangeInput] = useState(false)
-    // const [searchParams, setSearchParams] = useSearchParams();
-    const searchImages = useSearchFilter()
-    const setGETqueries = useGETqueries()
+    const searchValue = useSelector(state => state.submit.searchValue)
     const images = useSelector(state => state.submit.images)
-    const sortType = useSelector(state => state.submit.sortType)
-    const debounceValue = useDebounce(searchValue, 250)
+    const isShownFavorites = useSelector(state => state.submit.isShownFavorites)
+    const search = useSearchFilter()
     const dispatch = useDispatch()
 
-
     useEffect(() => {
-        const foudnImages = searchImages(debounceValue, [...images], sortType)
-        // console.log(foudnImages);
-        setGETqueries(debounceValue, 'searchValue', setSearchValue, isChangeInput)
-        dispatch(setFilteredImages(foudnImages))
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [debounceValue, isChangeInput])
-
+        const foundImages = search(searchValue, images)
+        console.log(searchValue, isShownFavorites);
+        dispatch(setFilteredImages(foundImages))
+    }, [searchValue, images, search, dispatch, isShownFavorites])
+    
     return (
         <Form.Control
             type='text'
             placeholder="Find images..."
             className={classes.SearchInput}
             onChange={(e) => {
-                setSearchValue(e.target.value)
-                if (!isChangeInput) setChangeInput(true)
+                dispatch(setSearchValue(e.target.value))
             }}
             value={searchValue}
             id='searchInput'

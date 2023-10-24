@@ -1,29 +1,13 @@
-/* eslint-disable react/prop-types */
 import classes from './ImagePreview.module.scss';
+import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
-import { TrashCan } from '../SvgComponents/TrashCan';
-import { ModalWindow } from '../modalWindows/ModalWindow';
-import { deleteImage, getAllImages } from '../../../services/axios';
-import { useDispatch, useSelector } from 'react-redux';
-import { setFilteredImages, setImages } from '../../../redux/submitSlice';
-import { useSort } from '../../../hooks/useFilter';
+import { ImageOperations } from './imageOperations';
+
 
 export const ImagePreview = ({ imageData }) => {
-    const { imageOriginalName, imageURL, _id, createdAt } = imageData;
+    const { imageOriginalName, imageURL, _id, createdAt, favorite} = imageData;
     const navigate = useNavigate();
     const navigateToImage = () => navigate(`/image/${_id}`);
-    const dispatch = useDispatch()
-    const sort = useSort()
-    const sortType = useSelector(state => state.submit.sortType)
-    
-    const deleteHandle = async (_id) => {
-        await deleteImage(_id)
-        const {imageDataField, isReverse} = sortType
-        const updatedImages = await getAllImages()
-        const sortedImages = sort(imageDataField, [...updatedImages.data], isReverse)
-        dispatch(setImages(sortedImages))
-        dispatch(setFilteredImages(sortedImages))
-    }
 
     return (
         <li className={classes.li}>
@@ -44,16 +28,12 @@ export const ImagePreview = ({ imageData }) => {
                 >
                     {imageOriginalName}
                 </span>
-                <div className={classes.removeImage} title='Remove image'>
-                    <ModalWindow
-                        title='Do you really want to delete this image?'
-                        agreeButtonText='Delete'
-                        disagreeButtonText='Leave'
-                        showModalBtn={<TrashCan/>}
-                        callback={() => deleteHandle(_id)}
-                    />
-                </div>
+                <ImageOperations isFavorite={favorite} imageId={_id}/>
             </div>
         </li>
     );
+};
+
+ImagePreview.propTypes = {
+    imageData: PropTypes.object,
 };

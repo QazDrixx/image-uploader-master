@@ -3,7 +3,6 @@ import axios from "axios";
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://127.0.0.1:4444/'
 
-
 const imageUploaderApi = axios.create({
     baseURL:API_URL,
     validateStatus: (status) => status < 500
@@ -44,6 +43,10 @@ export const getAllImages = async () => {
 
 export const deleteImage = async (imageId) => {
     return await imageUploaderApi.delete(`/images/${imageId}`)
+}
+
+export const updateImage = async (imageId, dataToUpdate) => {
+    return await imageUploaderApi.patch(`/images/${imageId}`, dataToUpdate)
 }
 
 imageUploaderApi.interceptors.request.use((config) => {

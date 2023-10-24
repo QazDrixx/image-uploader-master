@@ -6,16 +6,24 @@ import { ImageLoading } from '../ImageLoading/ImageLoading';
 import { useSelector } from 'react-redux';
 import { useState } from 'react';
 import { getOneImage } from '../../services/axios';
+import { ImageName } from './ImageName';
 
 export const ImageView = () => {
     const { imageId } = useParams()
     const isLoadingImage = useSelector(state => state.submit.isLoadingImage)
+    const images = useSelector(state => state.submit.images)
     const [imageData, setImageData] = useState()
+    console.log(imageData);
 
     useFetchImage(async () => {
-        const image = await getOneImage(imageId)
-        if (image.status === 200) {
-            setImageData(image.data)
+        if (images.length === 0) {
+            const image = await getOneImage(imageId)
+            if (image.status === 200) {
+                setImageData(image.data)
+            }
+        } else  {
+            const foundImage = images.find((image) => image._id == imageId)
+            setImageData(foundImage)
         }
     })
 
@@ -39,8 +47,8 @@ export const ImageView = () => {
                         Uploaded Successfully!
                     </div>
                 </div>
-                
-                <div className={classes.Preview} style={{"backgroundImage": `url(${imageData.imageURL})`}}></div>
+
+                <ImageName imageData={imageData}/>
 
                 <div className={classes.ImageUrlWrap}>
                     <a href={imageData.imageURL} className={classes.Url}>
