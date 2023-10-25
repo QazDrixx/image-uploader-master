@@ -7,11 +7,6 @@ const imageModel = new mongoose.Schema({
         required: true
     },
 
-    imageExt: {
-        type: String,
-        required: true
-    },
-
     imageURL: {
         type: String,
         required: true,
@@ -22,6 +17,11 @@ const imageModel = new mongoose.Schema({
         type: String,
         required: true,
         unique: true
+    },
+
+    favorite: {
+        type: Boolean,
+        required: true,
     },
 
     owner: {

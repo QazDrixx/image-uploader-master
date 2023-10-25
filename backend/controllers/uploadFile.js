@@ -8,13 +8,12 @@ export const uploadImage = async (req, res) => {
         if (files.length == 0) throw new Error("No image file provided");
 
         const docs = files.map(file => {
-            const {originalname, filename, destination, path} = file
+            const {originalname, destination, path} = file
             return {
-                imageUniqueName: parse(filename).name,
                 imageOriginalName: parse(originalname).name,
-                imageExt: parse(filename).ext,
                 imageURL: `${req.protocol}://${req.get('host')}/${path.replace(/\\/g, '/')}`,
                 imagePath: destination,
+                favorite: false,
                 owner: req.userId
             }
         });
