@@ -30,7 +30,7 @@ app.use(cors({
 }));
 
 
-app.post('/images', upload.single('image'), checkUser, imageController.uploadImage)
+app.post('/images', upload.array('image'), checkUser, imageController.uploadImage)
 
 app.get('/images', checkUser, imageController.getAllImages)
 
