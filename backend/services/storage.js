@@ -1,14 +1,16 @@
 import multer from "multer";
 import { randomUUID } from "node:crypto";
-import {existsSync, mkdirSync} from "node:fs";
+import { mkdir } from "node:fs/promises";
 import { parse } from 'node:path'
 
 const uploadFolder = 'media/'
 export const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
+    destination: async (req, file, cb) => {
         const path = `${uploadFolder}${getFolderName()}`
-        if (!existsSync(path)) {
-            mkdirSync(path, {recursive:true})
+        try {
+            await mkdir(path, {recursive:true}, (err) => {if(err) throw err})
+        } catch (err){
+            console.error(err);
         }
         cb(null, path)
     },

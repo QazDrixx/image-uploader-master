@@ -4,24 +4,26 @@ import imageModel from '../models/imageModel.js';
 
 export const uploadImage = async (req, res) => {
     try {
-        if (!req.file) throw new Error("No image file provided");
-        console.log(req.file);
-        const {originalname, destination, path} = req.file
+        const files = req.files
+        if (files.length == 0) throw new Error("No image file provided");
 
-        const doc = new imageModel({
-            imageOriginalName: parse(originalname).name,
-            imageURL: `${req.protocol}://${req.get('host')}/${path.replace(/\\/g, '/')}`,
-            imagePath: destination,
-            favorite: false,
-            owner: req.userId
-        })
-
-        const image = await doc.save()
-        res.json(image)
+        const docs = files.map(file => {
+            const {originalname, filename, destination, path} = file
+            return {
+                imageUniqueName: parse(filename).name,
+                imageOriginalName: parse(originalname).name,
+                imageExt: parse(filename).ext,
+                imageURL: `${req.protocol}://${req.get('host')}/${path.replace(/\\/g, '/')}`,
+                imagePath: destination,
+                owner: req.userId
+            }
+        });
+        const uploadedImages = await imageModel.insertMany(docs)
+        res.json(uploadedImages)
     }
     catch (err) {
         console.log(err);
-        res.status(400).json({msg:err.message});
+        res.status(500).json({msg:err.message});
     }
 }
 
