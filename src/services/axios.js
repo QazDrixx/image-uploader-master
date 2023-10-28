@@ -22,13 +22,15 @@ export const getUser = async () => {
     return await imageUploaderApi.get('getUser/')
 }
 
-export const postFile = async (file) => {
+export const postFile = async (files) => {
     const formData = new FormData();
-    formData.append('image', file);
+    for (let file of files) {
+        formData.append('image', file)
+    }
 
     return await imageUploaderApi.post('images/', formData, {
         headers: {
-            'Content-Type': 'multipart/form-data',
+            'Content-Type': 'multipart/form-data; charset=UTF-8;',
         },
     });
 };

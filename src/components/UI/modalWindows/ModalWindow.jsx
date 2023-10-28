@@ -21,7 +21,10 @@ export const ModalWindow = ({title, agreeButtonText, disagreeButtonText, showMod
                 <Button variant="primary" onClick={handleClose}>
                     {disagreeButtonText}
                 </Button>
-                <Button variant="secondary" onClick={() => {
+                <Button 
+                variant="secondary" 
+                autoFocus={true}
+                onClick={() => {
                     callback()
                     handleClose()
                 }}>

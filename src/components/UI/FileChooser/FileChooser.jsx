@@ -9,9 +9,10 @@ export const FileChooser = ({sendImage}) => {
                 <input
                     type="file"
                     id="FileChooser"
+                    multiple={true}
                     className={classes.FileChooser__input}
                     accept="image/*"
-                    onInput={e => sendImage(e.target.files[0])}
+                    onInput={e => sendImage(e.target.files)}
                 />
             </label>
         </div>
