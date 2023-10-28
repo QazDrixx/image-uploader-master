@@ -1,10 +1,10 @@
 import axios from "axios";
 
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://127.0.0.1:4444/'
+const BACKEND_API_URL = import.meta.env.VITE_BACKEND_API_URL || 'http://127.0.0.1:4444/'
 
 const imageUploaderApi = axios.create({
-    baseURL:API_URL,
+    baseURL:BACKEND_API_URL,
     validateStatus: (status) => status < 500
 })
 
