@@ -13,7 +13,6 @@ export const Sort = ({ sortOptions }) => {
 
     const dispatch = useDispatch()
     const sort = useSort()
-
     const sortHandle = useCallback((sortOption) => {
         const {imageDataField, isReverse} = sortOption
         const sortedImages = sort(imageDataField, images, isReverse)
@@ -22,8 +21,10 @@ export const Sort = ({ sortOptions }) => {
     }, [dispatch, sort, images]) 
 
     useEffect(() => {
-        
-        if (Object.keys(sortType).length === 0) sortHandle(sortOptions[0])
+        if (Object.keys(sortType).length === 0) {
+            sortHandle(sortOptions[0])
+            dispatch(setSortType(sortOptions[0]))
+        }
         else sortHandle(sortType)
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [sortType, isShownFavorites, searchValue])

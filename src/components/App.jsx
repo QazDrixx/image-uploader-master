@@ -8,6 +8,7 @@ import { Route, Routes} from 'react-router-dom';
 import { UserLogin } from './UserLogin/UserLogin';
 import { useFetchUser } from '../hooks/useFetchUser';
 import { AllImages } from './AllImages/AllImages';
+import { MultipleUploaded } from './UI/MultipleUploaded/MultipleUploaded';
 
 
 function App() {
@@ -19,11 +20,11 @@ function App() {
         <Routes>
             <Route path='/' element={<Layout/>}>
                 <Route index element={<ImageUploader/>} />
-
                 <Route path='/registration' element={<UserRegistration />}/>
                 <Route path='/login' element={<UserLogin/> }/>
                 <Route path='image/:imageId' element={<ImageView />}/>
                 <Route path='/allImages' element={<AllImages />}/>
+                <Route path='/multipleUploaded' element={<MultipleUploaded />}/>
                 <Route path='error' element={<UploadError />}/>
             </Route>
         </Routes>  

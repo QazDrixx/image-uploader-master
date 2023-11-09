@@ -11,8 +11,8 @@ export const useSendImageHandler = () => {
             dispatch(setLoadingImage(true))
             const response = await callback();
             if (response.status === 200) {
-                console.log(response.data);
-                navigate(`image/${response.data['_id']}`)
+                if (response.data.length === 1) navigate(`image/${response.data[0]['_id']}`)
+                else navigate(`multipleUploaded/`, {state: response.data})
             }
             else if (response.status === 401) {
                 navigate('registration/')

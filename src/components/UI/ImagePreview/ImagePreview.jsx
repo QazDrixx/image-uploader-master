@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { ImageOperations } from './imageOperations';
 
 
-export const ImagePreview = ({ imageData }) => {
+export const ImagePreview = ({ imageData, isShowImageOperations=true }) => {
     const { imageOriginalName, imageURL, _id, createdAt, favorite} = imageData;
     const navigate = useNavigate();
     const navigateToImage = () => navigate(`/image/${_id}`);
@@ -28,7 +28,7 @@ export const ImagePreview = ({ imageData }) => {
                 >
                     {imageOriginalName}
                 </span>
-                <ImageOperations isFavorite={favorite} imageId={_id}/>
+                {isShowImageOperations?<ImageOperations isFavorite={favorite} imageId={_id}/>:null}
             </div>
         </li>
     );
@@ -36,4 +36,5 @@ export const ImagePreview = ({ imageData }) => {
 
 ImagePreview.propTypes = {
     imageData: PropTypes.object,
+    isShowImageOperations: PropTypes.bool
 };

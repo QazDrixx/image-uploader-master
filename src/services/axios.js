@@ -1,10 +1,10 @@
 import axios from "axios";
 
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://127.0.0.1:4444/'
+const BACKEND_API_URL = import.meta.env.VITE_BACKEND_API_URL || 'http://127.0.0.1:4444/'
 
 const imageUploaderApi = axios.create({
-    baseURL:API_URL,
+    baseURL:BACKEND_API_URL,
     validateStatus: (status) => status < 500
 })
 
@@ -22,13 +22,15 @@ export const getUser = async () => {
     return await imageUploaderApi.get('getUser/')
 }
 
-export const postFile = async (file) => {
+export const postFile = async (files) => {
     const formData = new FormData();
-    formData.append('image', file);
+    for (let file of files) {
+        formData.append('image', file)
+    }
 
     return await imageUploaderApi.post('images/', formData, {
         headers: {
-            'Content-Type': 'multipart/form-data',
+            'Content-Type': 'multipart/form-data; charset=UTF-8;',
         },
     });
 };
