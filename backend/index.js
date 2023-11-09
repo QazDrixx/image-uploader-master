@@ -46,6 +46,8 @@ app.patch('/images/:id', checkUser, imageController.updateImage)
 
 app.get('/refresh', userController.refresh)
 
+app.get('/logout', userController.logout)
+
 app.listen(PORT, (err) => {
     if(err) console.log(err);
     else console.log(`The app is running on a port ${PORT}`);

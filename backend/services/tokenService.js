@@ -4,8 +4,8 @@ import tokenModel from "../models/tokenModel.js";
 
 
 export const generateTokens = (userId) => {
-    const accessToken = jwt.sign({userId:userId}, ACCESS_SECRET_KEY, {expiresIn:'30s'})
-    const refreshToken  = jwt.sign({userId:userId}, REFRESH_SECRET_KEY, {expiresIn:'30d'})
+    const accessToken = jwt.sign({userId:userId}, ACCESS_SECRET_KEY, {expiresIn:'10m'})
+    const refreshToken  = jwt.sign({userId:userId}, REFRESH_SECRET_KEY, {expiresIn:'14d'})
 
     return {accessToken, refreshToken}
 }
@@ -17,12 +17,11 @@ export const saveRefreshToken = async (newRefreshToken, userId, clientUUID) => {
         tokenData.refreshToken = newRefreshToken
         return await tokenData.save()
     } else {
-        const date = new Date()
         const newToken = new tokenModel({
             refreshToken:newRefreshToken,
             userId:userId,
             clientUUID:clientUUID,
-            expireAt:date.setTime(date.getTime() + 3600*24*30)
+            expireAt: new Date().setTime(new Date().getTime() + 3600*24*30)
         })
         return await newToken.save()
     }
@@ -45,8 +44,11 @@ export const verifyRefreshToken = (refreshToken) => {
     }
 }
 
-export const findToken = async (refreshToken) => {
+export const findeRefreshToken = async (refreshToken) => {
     const tokenData = await tokenModel.findOne({refreshToken:refreshToken})
     return tokenData.refreshToken
 }
 
+export const deleteRefreshToken = async (refreshToken) => {
+    return await tokenModel.findOneAndDelete({refreshToken:refreshToken})
+}

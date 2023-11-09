@@ -1,7 +1,8 @@
 import bcrypt from "bcrypt";
 import userSchema from "../models/userModel.js";
 import { validationResult } from "express-validator";
-import { TokenApi, verifyRefreshToken, findToken } from "../services/tokenService.js";
+import { TokenApi, verifyRefreshToken, findeRefreshToken, deleteRefreshToken } from "../services/tokenService.js";
+import { randomUUID } from "node:crypto";
 
 
 export const userRegistration = async (req, res) => {
@@ -24,7 +25,9 @@ export const userRegistration = async (req, res) => {
 
         const user = await doc.save()
 
-        const {accessToken, refreshToken} = TokenApi(user._id, req.cookies['clientUUID'])
+        const clientUUID = randomUUID() 
+        const {accessToken, refreshToken} = TokenApi(user._id, clientUUID)
+        res.cookie('clientUUID', clientUUID, {maxAge: 3600*24*30, httpOnly:true})
         res.cookie('refreshToken', refreshToken, {maxAge: 3600*24*30, httpOnly:true})
         res.send({...user._doc, accessToken})
 
@@ -40,8 +43,12 @@ export const userLogin = async (req, res) => {
         const user = await userSchema.findOne({$or:[{username:emailOrUsername}, {email:emailOrUsername}]}).orFail('User not found')
 
         if (!await bcrypt.compare(password, user.password)) throw new Error('Incorrect password')
-        const {accessToken, refreshToken} = TokenApi(user._id, req.cookies['clientUUID'])
+
+        const clientUUID = randomUUID() 
+        const {accessToken, refreshToken} = TokenApi(user._id, clientUUID)
+        res.cookie('clientUUID', clientUUID, {maxAge: 3600*24*30, httpOnly:true})
         res.cookie('refreshToken', refreshToken, {maxAge: 3600*24*30, httpOnly:true})
+
         res.json({...user._doc, accessToken})
 
     } catch (err) { 
@@ -67,13 +74,10 @@ export const refresh = async (req, res) => {
     try {
         const {refreshToken, clientUUID} = req.cookies
 
-        console.log(req.cookies);
-
         if (!refreshToken || !clientUUID) return res.status(401).json({msg: "Unauthorized user"})
 
         const userId = verifyRefreshToken(refreshToken)
-        const tokenFromDB = await findToken(refreshToken)
-        // console.log(`userId: ${userId}, tokenFromDB: ${tokenFromDB}`);
+        const tokenFromDB = await findeRefreshToken(refreshToken)
 
         if (!userId || !tokenFromDB) return res.status(401).json({msg: "Unauthorized user"})
 
@@ -83,6 +87,21 @@ export const refresh = async (req, res) => {
         res.json({accessToken:newTokens.accessToken})
 
        
+    } catch (err) {
+        console.log(err);
+        res.status(500).json({msg: "Something went wrong"})
+    }
+}
+
+export const logout = async (req, res) => {
+    try {
+        const {refreshToken} = req.cookies
+        
+        await deleteRefreshToken(refreshToken)
+        res.clearCookie('refreshToken')
+        res.clearCookie('clientUUID')
+            
+        return res.sendStatus(200)
     } catch (err) {
         console.log(err);
         res.status(500).json({msg: "Something went wrong"})
