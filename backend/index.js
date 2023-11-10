@@ -2,21 +2,18 @@ import express from "express";
 import morgan from "morgan";
 import multer from "multer";
 import cors from 'cors';
+import cookieParser from "cookie-parser";
 import mongoose from "mongoose";
-import { config } from "dotenv";
 import { checkUser } from "./services/checkUser.js";
 import { userValiadation } from "./services/validation.js";
 import { storage, fileFilter } from "./services/storage.js";
 import * as imageController from "./controllers/uploadFile.js";
 import * as userController from './controllers/userController.js'
-import 'dotenv'
+import { DB_URI, PORT, FRONTEND_URL } from "./services/env.js";
 
-config({path: '../.env'})
+
 const upload = multer({ storage: storage, fileFilter:fileFilter })
 const app = express()
-
-const DB_URI = process.env.DB_URI
-const FRONTEND_URL = process.env.FRONTEND_URL || 'http://localhost:5173'
 
 mongoose.connect(DB_URI)
     .then(() => console.log(`db is ok, db URI is: ${DB_URI}`))
@@ -26,8 +23,9 @@ app.use('/media', express.static('media'));
 app.use(express.json())
 app.use(morgan('dev'))
 app.use(cors({
-    origin: ['http://localhost:5173', FRONTEND_URL]
+    origin: ['http://localhost:4173', FRONTEND_URL]
 }));
+app.use(cookieParser())
 
 
 app.post('/images', upload.array('image'), checkUser, imageController.uploadImage)
@@ -46,7 +44,9 @@ app.get('/getUser', checkUser, userController.getUser)
 
 app.patch('/images/:id', checkUser, imageController.updateImage)
 
-const PORT = process.env.PORT || 5555
+app.get('/refresh', userController.refresh)
+
+app.get('/logout', userController.logout)
 
 app.listen(PORT, (err) => {
     if(err) console.log(err);
