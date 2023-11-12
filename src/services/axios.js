@@ -5,7 +5,8 @@ const BACKEND_API_URL = import.meta.env.VITE_BACKEND_API_URL || 'http://127.0.0.
 
 const imageUploaderApi = axios.create({
     baseURL:BACKEND_API_URL,
-    validateStatus: (status) => status < 500
+    validateStatus: (status) => status < 500 && status !== 401,
+    withCredentials:true,
 })
 
 export const login = async (userData, isRegistration=false) => {
@@ -51,7 +52,27 @@ export const updateImage = async (imageId, dataToUpdate) => {
     return await imageUploaderApi.patch(`/images/${imageId}`, dataToUpdate)
 }
 
+export const logout = async () => {
+    return await imageUploaderApi.get('/logout')
+}
+
 imageUploaderApi.interceptors.request.use((config) => {
-    config.headers.Authorization = localStorage.getItem('token') || ''
+    config.headers.Authorization = localStorage.getItem('accessToken') || ''
     return config
+})
+
+imageUploaderApi.interceptors.response.use((response) => {
+    return response
+}, async (error) => {
+    const originalRequest = error.config
+    if (error.response.status === 401 && error.config && !error.config.isRetry) {
+        originalRequest.isRetry = true
+        try {
+            const newToken = await imageUploaderApi.get('/refresh')
+            localStorage.setItem('accessToken', newToken.data.accessToken)  
+            return await imageUploaderApi.request(originalRequest)
+        } catch (error) {
+            console.log('Unauthorized user');
+        }
+    }
 })

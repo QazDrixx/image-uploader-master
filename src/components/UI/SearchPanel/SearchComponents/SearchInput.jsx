@@ -15,7 +15,6 @@ export const SearchInput = () => {
 
     useEffect(() => {
         const foundImages = search(searchValue, images)
-        console.log(searchValue, isShownFavorites);
         dispatch(setFilteredImages(foundImages))
     }, [searchValue, images, search, dispatch, isShownFavorites])
     

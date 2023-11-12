@@ -1,10 +1,9 @@
 import bcrypt from "bcrypt";
-import jwt from "jsonwebtoken";
 import userSchema from "../models/userModel.js";
 import { validationResult } from "express-validator";
-import { config } from "dotenv";
+import { TokenApi, verifyRefreshToken, findeRefreshToken, deleteRefreshToken } from "../services/tokenService.js";
+import { randomUUID } from "node:crypto";
 
-config({path: '../../.env'})
 
 export const userRegistration = async (req, res) => {
     try {
@@ -25,9 +24,12 @@ export const userRegistration = async (req, res) => {
         })
 
         const user = await doc.save()
-        
-        const token = jwt.sign({userId:user._id}, process.env.SECRET_KEY, {expiresIn:'14d'})
-        res.send({...user._doc, token})
+
+        const clientUUID = randomUUID() 
+        const {accessToken, refreshToken} = TokenApi(user._id, clientUUID)
+        res.cookie('clientUUID', clientUUID, {maxAge: 3600*1000*24*30, httpOnly:true, sameSite:'none', secure:true})
+        res.cookie('refreshToken', refreshToken, {maxAge: 3600*1000*24*30, httpOnly:true, sameSite:'none', secure:true})
+        res.send({...user._doc, accessToken})
 
     } catch(err) {
         console.log(err);
@@ -41,23 +43,64 @@ export const userLogin = async (req, res) => {
         const user = await userSchema.findOne({$or:[{username:emailOrUsername}, {email:emailOrUsername}]}).orFail('User not found')
 
         if (!await bcrypt.compare(password, user.password)) throw new Error('Incorrect password')
-        const token = jwt.sign({userId:user._id}, process.env.SECRET_KEY, {expiresIn:'14d'})
-        res.json({...user._doc, token})
 
-    } catch (err) {
+        const clientUUID = randomUUID() 
+        const {accessToken, refreshToken} = TokenApi(user._id, clientUUID)
+        res.cookie('clientUUID', clientUUID, {maxAge: 3600*1000*24*30, httpOnly:true, sameSite:'none', secure:true})
+        res.cookie('refreshToken', refreshToken, {maxAge: 3600*1000*24*30, httpOnly:true, sameSite:'none', secure:true})
+
+        res.json({...user._doc, accessToken})
+
+    } catch (err) { 
         console.log(err);
         res.status(403).json({msg:'Incorect email/username or password'})
     }
-
 }
 
 export const getUser = async (req, res) => {
     try {
         const user = await userSchema.findById(req.userId)
         if(!user) return res.status(404).json({msg:'User not found'})
-        const token = jwt.sign({userId:user._id}, process.env.SECRET_KEY, {expiresIn:'14d'})
-        res.json({...user._doc, token})
+        // const {accessToken} = generateTokens(user._id)
+        res.json({...user._doc})
 
+    } catch (err) {
+        console.log(err);
+        res.status(500).json({msg: "Something went wrong"})
+    }
+}
+
+export const refresh = async (req, res) => {
+    try {
+        const {refreshToken, clientUUID} = req.cookies
+
+        if (!refreshToken || !clientUUID) return res.status(404).json({msg: "refreshToken doesn't exist"})
+
+        const userId = verifyRefreshToken(refreshToken)
+        const tokenFromDB = await findeRefreshToken(refreshToken)
+
+        if (!userId || !tokenFromDB) return res.status(401).json({msg: "Unauthorized user"})
+
+        const newTokens = TokenApi(userId, clientUUID)
+        res.cookie('refreshToken', newTokens.refreshToken, {maxAge: 3600*1000*24*30, httpOnly:true, sameSite:'none', secure:true})
+        res.json({accessToken:newTokens.accessToken})
+
+       
+    } catch (err) {
+        console.log(err);
+        res.status(500).json({msg: "Something went wrong"})
+    }
+}
+
+export const logout = async (req, res) => {
+    try {
+        const {refreshToken} = req.cookies
+        
+        await deleteRefreshToken(refreshToken)
+        res.clearCookie('refreshToken')
+        res.clearCookie('clientUUID')
+            
+        return res.sendStatus(200)
     } catch (err) {
         console.log(err);
         res.status(500).json({msg: "Something went wrong"})

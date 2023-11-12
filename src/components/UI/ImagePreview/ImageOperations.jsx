@@ -21,8 +21,6 @@ export const ImageOperations = ({isFavorite, imageId}) => {
     const deleteHandle = async (_id) => {
         await deleteImage(_id)
         const updatedImages = await getAllImages()
-        console.log(updatedImages);
-        console.log(sortType.imageDataField);
         dispatch(setImages(sort(sortType.imageDataField, updatedImages.data, sortType.isReverse)))
     }
 

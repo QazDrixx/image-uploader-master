@@ -1,5 +1,4 @@
 import { useCallback } from 'react';
-// import { useSearchParams } from 'react-router-dom';
 
 
 export const useSearchFilter = () => {
@@ -16,15 +15,3 @@ export const useSort = () => {
         return sortedImages
     }, [])
 }
-
-// export const useGETqueries = () => {
-//     const [searchParams, setSearchParams] = useSearchParams();
-//     return (value, valueName, setComponentState, isComponentChange=false) => {
-//         if(!value) {
-//             if (isComponentChange || !searchParams.get(valueName)) {
-//                 searchParams.delete(valueName)
-//                 setSearchParams(searchParams)
-//             } else setComponentState(searchParams.get(valueName))
-//         } else setSearchParams({[`${valueName}`]:value})
-//     }
-// }
