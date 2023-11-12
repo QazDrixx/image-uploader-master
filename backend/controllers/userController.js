@@ -27,8 +27,8 @@ export const userRegistration = async (req, res) => {
 
         const clientUUID = randomUUID() 
         const {accessToken, refreshToken} = TokenApi(user._id, clientUUID)
-        res.cookie('clientUUID', clientUUID, {maxAge: 3600*24*30, httpOnly:true})
-        res.cookie('refreshToken', refreshToken, {maxAge: 3600*24*30, httpOnly:true})
+        res.cookie('clientUUID', clientUUID, {maxAge: 3600*1000*24*30, httpOnly:true, sameSite:'none', secure:true})
+        res.cookie('refreshToken', refreshToken, {maxAge: 3600*1000*24*30, httpOnly:true, sameSite:'none', secure:true})
         res.send({...user._doc, accessToken})
 
     } catch(err) {
@@ -46,8 +46,8 @@ export const userLogin = async (req, res) => {
 
         const clientUUID = randomUUID() 
         const {accessToken, refreshToken} = TokenApi(user._id, clientUUID)
-        res.cookie('clientUUID', clientUUID, {maxAge: 3600*24*30, httpOnly:true})
-        res.cookie('refreshToken', refreshToken, {maxAge: 3600*24*30, httpOnly:true})
+        res.cookie('clientUUID', clientUUID, {maxAge: 3600*1000*24*30, httpOnly:true, sameSite:'none', secure:true})
+        res.cookie('refreshToken', refreshToken, {maxAge: 3600*1000*24*30, httpOnly:true, sameSite:'none', secure:true})
 
         res.json({...user._doc, accessToken})
 
@@ -74,7 +74,7 @@ export const refresh = async (req, res) => {
     try {
         const {refreshToken, clientUUID} = req.cookies
 
-        if (!refreshToken || !clientUUID) return res.status(401).json({msg: "Unauthorized user"})
+        if (!refreshToken || !clientUUID) return res.status(404).json({msg: "refreshToken doesn't exist"})
 
         const userId = verifyRefreshToken(refreshToken)
         const tokenFromDB = await findeRefreshToken(refreshToken)
@@ -82,8 +82,7 @@ export const refresh = async (req, res) => {
         if (!userId || !tokenFromDB) return res.status(401).json({msg: "Unauthorized user"})
 
         const newTokens = TokenApi(userId, clientUUID)
-        console.log(newTokens);
-        res.cookie('refreshToken', newTokens.refreshToken, {maxAge: 3600*24*30, httpOnly:true})
+        res.cookie('refreshToken', newTokens.refreshToken, {maxAge: 3600*1000*24*30, httpOnly:true, sameSite:'none', secure:true})
         res.json({accessToken:newTokens.accessToken})
 
        
