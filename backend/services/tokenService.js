@@ -5,7 +5,7 @@ import tokenModel from "../models/tokenModel.js";
 
 export const generateTokens = (userId) => {
     const accessToken = jwt.sign({userId:userId}, ACCESS_SECRET_KEY, {expiresIn:'10m'})
-    const refreshToken  = jwt.sign({userId:userId}, REFRESH_SECRET_KEY, {expiresIn:'14d'})
+    const refreshToken  = jwt.sign({userId:userId}, REFRESH_SECRET_KEY, {expiresIn:'30d'})
 
     return {accessToken, refreshToken}
 }
@@ -21,7 +21,7 @@ export const saveRefreshToken = async (newRefreshToken, userId, clientUUID) => {
             refreshToken:newRefreshToken,
             userId:userId,
             clientUUID:clientUUID,
-            expireAt: new Date().setTime(new Date().getTime() + 3600*24*30)
+            expireAt: new Date().setTime(new Date().getTime() + 3600*1000*24*30)
         })
         return await newToken.save()
     }

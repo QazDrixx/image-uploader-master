@@ -10,11 +10,10 @@ export const useAuthHandler = () => {
         try {
             dispatch(setLoadingAuth(true))
             const responce = await callback()
-            console.log(responce);
 
             if(responce.status === 200) {
                 dispatch(setUserData({...responce.data}))
-                localStorage.setItem('token', responce.data.token)
+                localStorage.setItem('accessToken', responce.data.accessToken)
                 dispatch(setAuth(true))
             }
             else dispatch(setAuthError(responce.data.msg))

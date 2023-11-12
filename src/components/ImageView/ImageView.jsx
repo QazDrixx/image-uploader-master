@@ -13,7 +13,6 @@ export const ImageView = () => {
     const isLoadingImage = useSelector(state => state.submit.isLoadingImage)
     const images = useSelector(state => state.submit.images)
     const [imageData, setImageData] = useState()
-    console.log(imageData);
 
     useFetchImage(async () => {
         if (images.length === 0) {
@@ -26,8 +25,6 @@ export const ImageView = () => {
             setImageData(foundImage)
         }
     })
-
-    // console.log(imageData);
 
     return (
         <>

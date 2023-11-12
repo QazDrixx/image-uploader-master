@@ -7,7 +7,6 @@ import { useState, useEffect } from 'react';
 export const MultipleUploaded = () => {
     const location = useLocation()
     const navigate = useNavigate()
-    console.log(location);
     const [uploadedImages] = useState(location.state || [])
 
     

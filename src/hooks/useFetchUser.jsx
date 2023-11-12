@@ -9,7 +9,7 @@ export const useFetchUser = () => {
     useEffect(() => {
         (async function () {
             try {
-                if (localStorage.getItem('token')) {
+                if (localStorage.getItem('accessToken')) {
                     const user = await getUser()
                     if(user.status === 200) {
                         dispatch(setUserData(user.data))

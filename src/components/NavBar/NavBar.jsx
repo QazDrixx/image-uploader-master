@@ -43,7 +43,7 @@ export const NavBar = () => {
                                 agreeButtonText='Log out'
                                 disagreeButtonText='Stay'
                                 showModalBtn='Log Out'
-                                callback={logOut}
+                                callback={async () => await logOut()}
                                 />
                             </NavDropdown.Item>
                         </NavDropdown>

@@ -13,8 +13,7 @@ export const ImageName = ({imageData}) => {
 
     const handleSubmit = async(e) => {
         e.preventDefault()
-        const updatedImage = await updateImage(imageData._id, {imageOriginalName:imageName})
-        console.log(updatedImage);
+        await updateImage(imageData._id, {imageOriginalName:imageName})
         setEditing(false)
     }
 

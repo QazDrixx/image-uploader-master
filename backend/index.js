@@ -21,12 +21,15 @@ mongoose.connect(DB_URI)
 
 app.use('/media', express.static('media'));
 app.use(express.json())
-app.use(morgan('dev'))
+app.use(morgan('tiny'))
 app.use(cors({
-    origin: ['http://localhost:4173', FRONTEND_URL]
+    origin: [FRONTEND_URL],
+    default: FRONTEND_URL,
+    credentials: true
 }));
 app.use(cookieParser())
 
+console.log(FRONTEND_URL);
 
 app.post('/images', upload.array('image'), checkUser, imageController.uploadImage)
 

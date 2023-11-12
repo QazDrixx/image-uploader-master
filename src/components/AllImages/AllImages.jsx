@@ -34,8 +34,6 @@ export const AllImages = () => {
         )
     })
 
-    // console.log(images);
-
     return (
         <>
         {

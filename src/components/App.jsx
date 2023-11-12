@@ -25,7 +25,8 @@ function App() {
                 <Route path='image/:imageId' element={<ImageView />}/>
                 <Route path='/allImages' element={<AllImages />}/>
                 <Route path='/multipleUploaded' element={<MultipleUploaded />}/>
-                <Route path='error' element={<UploadError />}/>
+                <Route path='error' element={<UploadError errorText={'Something went wrong...'}/>}/>
+                <Route path='*' element={<UploadError errorText={"This page doesn't exist"} />} />
             </Route>
         </Routes>  
         </>
