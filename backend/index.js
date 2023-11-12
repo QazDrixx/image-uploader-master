@@ -16,17 +16,20 @@ const upload = multer({ storage: storage, fileFilter:fileFilter })
 const app = express()
 
 mongoose.connect(DB_URI)
-    .then(() => console.log(`db ok, db URI is: ${DB_URI}`))
+    .then(() => console.log(`db is ok, db URI is: ${DB_URI}`))
     .catch(err => console.log(err))
 
 app.use('/media', express.static('media'));
 app.use(express.json())
-app.use(morgan('dev'))
+app.use(morgan('tiny'))
 app.use(cors({
-    origin: ['http://localhost:4173', FRONTEND_URL]
+    origin: [FRONTEND_URL],
+    default: FRONTEND_URL,
+    credentials: true
 }));
 app.use(cookieParser())
 
+console.log(FRONTEND_URL);
 
 app.post('/images', upload.array('image'), checkUser, imageController.uploadImage)
 
