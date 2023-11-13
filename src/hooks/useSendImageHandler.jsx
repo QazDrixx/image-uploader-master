@@ -14,7 +14,7 @@ export const useSendImageHandler = () => {
                 if (response.data.length === 1) navigate(`image/${response.data[0]['_id']}`)
                 else navigate(`multipleUploaded/`, {state: response.data})
             }
-            else if (response.status === 401) {
+            else if (response.status < 500) {
                 navigate('registration/')
             }
             // navigate()
