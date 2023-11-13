@@ -4,7 +4,7 @@ import Container from 'react-bootstrap/Container';
 import { Nav, Navbar, NavDropdown, Button } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
 import { DotsLoading } from '../UI/DotsLoaing/DotsLoading';
-import { ModalWindow } from '../UI/ModalWindows/ModalWindow';
+import { ModalWindow } from '../UI/ModalWindow/ModalWindow';
 import { useLogOut } from '../../hooks/useLogOut';
 
 
@@ -14,7 +14,6 @@ export const NavBar = () => {
     const isFetchingUser = useSelector((state) => state.auth.isFetchingUser)
     const navigate = useNavigate()
     const logOut = useLogOut()
-
 
     return (
         <Navbar expand="lg" className='bg-body-tertiary'>
