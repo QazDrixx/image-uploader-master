@@ -4,7 +4,7 @@ import Container from 'react-bootstrap/Container';
 import { Nav, Navbar, NavDropdown, Button } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
 import { DotsLoading } from '../UI/DotsLoaing/DotsLoading';
-import { ModalWindow } from '../UI/modalWindows/ModalWindow';
+import { ModalWindow } from '../UI/ModalWindows/ModalWindow';
 import { useLogOut } from '../../hooks/useLogOut';
 
 

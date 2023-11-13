@@ -1,7 +1,7 @@
 import classes from './ImagePreview.module.scss';
 import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
-import { ImageOperations } from './imageOperations';
+import { ImageOperations } from './ImageOperations'
 
 
 export const ImagePreview = ({ imageData, isShowImageOperations=true }) => {

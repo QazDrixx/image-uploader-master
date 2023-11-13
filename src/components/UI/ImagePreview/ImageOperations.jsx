@@ -2,7 +2,7 @@ import classes from './ImagePreview.module.scss';
 import PropTypes from 'prop-types';
 
 import { TrashCan } from '../SvgComponents/TrashCan';
-import { ModalWindow } from '../modalWindows/ModalWindow';
+import { ModalWindow } from '../ModalWindows/ModalWindow';
 import { deleteImage, getAllImages, updateImage } from '../../../services/axios';
 import { useDispatch, useSelector } from 'react-redux';
 import { setImages } from '../../../redux/submitSlice';
