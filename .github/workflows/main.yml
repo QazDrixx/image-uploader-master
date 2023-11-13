@@ -1,0 +1,22 @@
+name: buildReact
+
+on: 
+  push:
+    branches: "main"
+  
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4.1.1
+
+      - name: installDeps
+        run: npm ci
+      - name: build
+        run: npm run build
+
+      - name: deploy
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: dist
+    
