@@ -9,6 +9,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    environment: production 
     steps:
       - uses: actions/checkout@v4.1.1
 
@@ -16,10 +17,9 @@ jobs:
         run: |
           npm ci
           npm run build
-          echo "BACKEND_API_URL: $({vars.VITE_BACKEND_API_URL})"
+          echo "BACKEND_API_URL: $({ vars.VITE_BACKEND_API_URL })"
 
       - name: deploy
         uses: JamesIves/github-pages-deploy-action@v4
         with:
           folder: dist
-    
