@@ -85,6 +85,7 @@ To clone and run this application, you'll need [Git](https://git-scm.com), [Node
 ```bash
 # Clone this repository
 $ git clone https://github.com/QazDrixx/image-uploader-master.git
+$ cd image-uploader-master
 
 # Install dependencies
 $ npm install
