@@ -8,11 +8,12 @@ export const uploadImage = async (req, res) => {
         if (files.length == 0) throw new Error("No image file provided");
 
         const docs = files.map(file => {
-            const {originalname, destination, path} = file
+            const {originalname, path} = file
+            console.log(file);
             return {
                 imageOriginalName: parse(originalname).name,
                 imageURL: `${req.protocol}://${req.get('host')}/${path.replace(/\\/g, '/')}`,
-                imagePath: destination,
+                imagePath: path,
                 favorite: false,
                 owner: req.userId
             }
@@ -53,7 +54,7 @@ export const deleteImage = async (req, res) => {
         if (!image) return res.status(404).json({msg: 'image not found'})
         await imageModel.deleteOne({_id: image._id})
         
-        rm(image.imagePath, {recursive:true}, (err) => {if(err) throw new Error(err)})
+        rm(image.imagePath, (err) => {if(err) throw new Error(err)})
         
         res.json({msg: 'Image deleted successfully'})
     } catch (err) {
